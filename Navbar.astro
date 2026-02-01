@@ -1,0 +1,148 @@
+---
+---
+
+<header>
+    <div class="container nav">
+      <!-- Logo (Left) -->
+      <a href="#" class="brand">
+        <img src="/logo-light-v2.png" alt="Logotipo de El club de la mente fría" class="logo-light" />
+        <img src="/logo-dark.png" alt="Logotipo de El club de la mente fría" class="logo-dark" />
+      </a>
+      
+      <!-- Right Side Container (Links + Controls) -->
+      <div class="right-cluster">
+          <!-- Navigation -->
+          <nav class="nav-links hidden md:flex" aria-label="Principal">
+            <a href="#automation-types">Soluciones</a>
+            <a href="#packs">Cómo trabajamos</a>
+            <a href="#newsletter">Newsletter</a>
+          </nav>
+          
+          <!-- Controls -->
+          <div class="controls">
+              <button class="theme-toggle" id="themeToggle" aria-pressed="true" aria-label="Cambiar tema">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </button>
+              <button class="btn btn-primary hidden sm:inline-flex" id="navCtaBtn" aria-label="Quiero agendar mi demo">Quiero agendar mi demo</button>
+          </div>
+      </div>
+    </div>
+</header>
+<script>
+    const toggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Set initial initial state
+    if (body.classList.contains('theme-light')) {
+        toggle?.setAttribute('aria-pressed', 'false');
+    }
+
+    toggle?.addEventListener('click', () => {
+      const isLight = body.classList.contains('theme-light');
+      body.classList.toggle('theme-light', !isLight);
+      body.classList.toggle('theme-dark', isLight);
+      toggle.setAttribute('aria-pressed', String(!isLight));
+      localStorage.setItem('ecmf-theme', isLight ? 'dark' : 'light');
+    });
+
+    // Smooth scroll to form
+    const navCta = document.getElementById('navCtaBtn');
+    navCta?.addEventListener('click', () => {
+      const formContainer = document.getElementById('heroFormContainer');
+      formContainer?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+</script>
+
+<style>
+    header {
+      position: sticky; top: 0; z-index: 100; 
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    .theme-light header {
+      background: rgba(255, 255, 255, 0.7);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .nav { 
+        display: flex; align-items: center; justify-content: space-between; 
+        padding: 0;
+        height: 80px;
+    }
+    
+    .brand { display:flex; align-items:center; gap: var(--s-3); text-decoration:none !important;}
+    
+    /* Base logo style sets hierarchy */
+    .brand img { 
+        width: auto; 
+        object-fit: contain; 
+        /* Ensure logos don't overflow or break layout */
+        max-width: 250px; 
+    }
+
+    /* Theme-based logo switching */
+    /* Light logo maximized to fill 80px container (consumed padding) */
+    .logo-light { display: block; height: 80px; }
+    /* Dark logo kept at 72px to maintain visual proportion (centered in 80px) */
+    .logo-dark { display: none; height: 72px; }
+
+    :global(.theme-dark) .logo-light { display: none; }
+    :global(.theme-dark) .logo-dark { display: block; }
+    
+    /* Right side grouping */
+    .right-cluster { display: flex; align-items: center; gap: 2rem; }
+    
+    .nav-links { display: flex; gap: var(--s-5); }
+    .nav-links a { 
+        color: var(--text); text-decoration: none; font-weight: 700; font-size: 0.9rem;
+        transition: all 0.2s;
+        letter-spacing: -0.01em;
+        opacity: 0.8;
+    }
+    .nav-links a:hover { color: var(--brand-pink); opacity: 1; transform: translateY(-1px); }
+    
+    .controls { display: flex; align-items: center; gap: 1rem; }
+
+    .theme-toggle { 
+        border: 1px solid rgba(255,255,255,0.05); 
+        background: color-mix(in oklab, var(--surface) 40%, transparent); 
+        color: var(--text);
+        border-radius: 12px; width: 42px; height: 42px; 
+        display: flex; align-items: center; justify-content: center; 
+        cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    .theme-toggle:hover { 
+        background: color-mix(in oklab, var(--surface) 60%, transparent); 
+        border-color: rgba(255,255,255,0.1);
+        transform: translateY(-1px);
+    }
+    
+    .theme-toggle svg { width: 20px; height: 20px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; }
+    
+    .sun-icon { opacity: 0; transform: translateY(20px) rotate(45deg); }
+    .moon-icon { opacity: 1; transform: translateY(0) rotate(0); }
+
+    .theme-light .sun-icon { opacity: 1; transform: translateY(0) rotate(0); }
+    .theme-light .moon-icon { opacity: 0; transform: translateY(-20px) rotate(-45deg); }
+
+    .theme-light .theme-toggle {
+        border-color: rgba(0,0,0,0.05);
+        background: rgba(0,0,0,0.03);
+    }
+    
+    /* CTA Text Color and Size Overrides */
+    .btn-primary { color: white !important; }
+    #navCtaBtn { padding-top: 0.6rem; padding-bottom: 0.6rem; font-size: 0.9rem; }
+
+    /* Utilities */
+    .hidden { display: none !important; }
+    .flex { display: flex !important; }
+    @media (min-width: 768px) { .hidden.md\:flex { display: flex !important; } }
+    @media (min-width: 640px) { .hidden.sm\:inline-flex { display: inline-flex !important; } }
+</style>

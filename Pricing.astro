@@ -1,0 +1,246 @@
+---
+---
+<section id="packs" class="pricing-section">
+    <div class="container">
+      <h2 class="section-title text-center">Inversión clara en 3 pasos</h2>
+      
+      <div class="pricing-intro text-center mx-auto mb-12">
+        <p class="text-muted">Desglosamos la inversión necesaria para que sepas exactamente qué estás pagando. Usa solo 1 bloque, usa 2 o los 3. Lo que necesites.</p>
+      </div>
+      
+      <div class="grid-3" style="margin-top: var(--s-6);">
+        <!-- Pack 1 -->
+        <div class="card pricing-card">
+          <div>
+            <h3 class="gradient-text">1. Exploración (audit)</h3>
+            <p class="price">990€ <span class="period">+ IVA</span></p>
+            <p class="desc">Antes de tocar nada, entendemos el terreno.</p>
+            <div class="step-detail">
+                <p>Qué quieres construir.</p>
+                <p>Qué necesitas de verdad.</p>
+                <p>Y qué piezas sobran.</p>
+                <p class="mt-4 font-bold">Sin suposiciones. Solo claridad.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pack 2 (Highlight) -->
+        <div class="card pricing-card">
+          <div>
+            <h3 class="gradient-text">2. Desarrollo & Implementación</h3>
+            <p class="price"><span class="price-prefix">Desde</span> 1.200€ <span class="period">+ IVA</span></p>
+            <div style="margin-top: 1.5rem; margin-bottom: 2rem;">
+                <p class="price-caveat gradient-text" style="font-size: 1rem; font-weight: 700;">Elige el desarrollo que más te convenga de la sección Tipo de automatizaciones n8n (justo arriba)</p>
+            </div>
+            <p class="desc">Con las piezas claras, empezamos a construir.</p>
+            <div class="step-detail">
+                <p class="mt-4"><strong>Bloque a bloque. <br> Todo encaja.</strong></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pack 3 -->
+        <div class="card pricing-card">
+          <div>
+            <h3 class="gradient-text">3. Soporte & Evolución</h3>
+            <p class="price">490€<span class="period">/mes + IVA</span></p>
+            <p class="desc"><strong>Un buen sistema no se termina. Evoluciona.</strong></p>
+            <div class="step-detail">
+                <p>Ajustamos, mejoramos y añadimos nuevas piezas cuando el negocio lo pide, no antes.</p>
+                <p class="mt-4">Sin rehacerlo todo. <br> Sin empezar de cero.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-it-works-dropdown mt-16 max-w-4xl mx-auto">
+        <div class="text-center">
+            <button id="toggleHowItWorks" class="btn btn-secondary" style="font-size: 1.1rem; padding: 0.8rem 1.8rem; border-radius: 10px;">¿Cómo funciona?</button>
+        </div>
+        
+        <div id="howItWorksContainer" class="hidden overflow-hidden transition-all duration-500 ease-in-out mt-12 mb-12" style="max-height: 0; opacity: 0; padding: 2rem 1rem;">
+            <div class="lego-walkthrough-card">
+                <div class="text-center mb-12">
+                    <h4 class="lego-title">¿Recuerdas cuando montabas un LEGO?</h4>
+                    <p class="lego-subtitle">Aquí funciona igual. <strong>Coge lo que necesites y monta el edificio que más te guste.</strong></p>
+                </div>
+                
+                <div class="scenarios-grid">
+                    <div class="scenario-box">
+                        <div class="scenario-header">Ejemplo: Pack Completo</div>
+                        <div class="scenario-body">
+                            <ul class="scenario-items">
+                                <li><span class="label">¿Quiero audit?</span> <span class="value">Sí (990€)</span></li>
+                                <li><span class="label">Desarrollo</span> <span class="value">Intermediate (2.300€)</span></li>
+                                <li><span class="label">Soporte</span> <span class="value">A medida (atención telefónica)</span></li>
+                            </ul>
+                            <div class="result-minimal">
+                                <p class="calc">990€ + 2.300€ + Estimación Soporte</p>
+                                <p class="total">Unos 3.290€ + IVA</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-box">
+                        <div class="scenario-header">Ejemplo: Solo Operativa</div>
+                        <div class="scenario-body">
+                            <ul class="scenario-items">
+                                <li><span class="label">Audit</span> <span class="value no">No</span></li>
+                                <li><span class="label">Desarrollo</span> <span class="value">Intermediate (2.300€)</span></li>
+                                <li><span class="label">Soporte</span> <span class="value">Básico (490€)</span></li>
+                            </ul>
+                            <div class="result-minimal">
+                                <p class="calc">2.300€ + 490€</p>
+                                <p class="total">2.790€ + IVA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<script>
+    const trigger = document.getElementById('toggleHowItWorks');
+    const content = document.getElementById('howItWorksContainer');
+    
+    if(trigger && content) {
+        trigger.addEventListener('click', () => {
+            const isHidden = content.classList.contains('hidden');
+            if(isHidden) {
+                content.classList.remove('hidden');
+                setTimeout(() => {
+                    content.style.maxHeight = '2000px'; // Increased to prevent cutting off
+                    content.style.opacity = '1';
+                }, 10);
+                trigger.textContent = "Cerrar ejemplo";
+            } else {
+                content.style.maxHeight = '0';
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    content.classList.add('hidden');
+                }, 500);
+                trigger.textContent = "¿Cómo funciona?";
+            }
+        });
+    }
+</script>
+
+<style>
+    section { padding: var(--s-8) 0; }
+    .text-center { text-align: center; }
+    
+    .pricing-section {
+        padding-top: var(--section-spacing);
+        padding-bottom: var(--section-spacing);
+        background: color-mix(in oklab, var(--surface) 30%, transparent);
+    }
+    .pricing-card { 
+        padding: var(--s-6); 
+        display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-5);
+        position: relative;
+        text-align: left;
+    }
+    .pricing-intro p {
+        color: var(--muted);
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: var(--ff-display);
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+    }
+    .color-brand { color: var(--brand-purple); }
+    .step-detail { color: var(--text); font-size: 1rem; line-height: 1.6; margin-top: 1rem; }
+    .step-detail p { margin-bottom: 0.25rem; }
+    
+    .gradient-text {
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+    }
+    
+    .pricing-card h3 {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.03em;
+    }
+
+    .highlight { 
+        border-color: var(--brand-purple); 
+        background: color-mix(in oklab, var(--brand-purple) 5%, var(--surface));
+        box-shadow: 0 0 30px rgba(75, 42, 140, 0.15);
+        transform: scale(1.02);
+    }
+    @media (max-width: 960px) { .highlight { transform: none; } }
+
+    .badge-float {
+        position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+        background: var(--brand-gradient); color: white;
+        padding: 0.25rem 0.75rem; border-radius: 99px;
+        font-size: 0.75rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    .price { font-family: var(--ff-display); font-size: 2.8rem; font-weight: 800; color: var(--text); margin: var(--s-2) 0; letter-spacing: -0.04em; }
+    .price .period { font-size: 1rem; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+    .price .price-prefix { font-size: 0.8em; font-weight: 400; color: var(--muted); margin-right: 0.2rem; }
+    .desc { margin-bottom: var(--s-4); color: var(--muted); line-height: 1.5; min-height: 3em;}
+
+    .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+    .check-list li { padding-left: 1.5rem; position: relative; color: var(--text); font-size: 0.95rem; }
+    .check-list li::before { 
+        content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: bold; 
+    }
+
+    .full-width { width: 100%; justify-content: center; text-align: center; }
+
+    /* LEGO Walkthrough Redesign */
+    .lego-walkthrough-card {
+        background: color-mix(in oklab, var(--surface) 80%, transparent); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08); 
+        border-radius: 24px;
+        padding: 4rem;
+        box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+    }
+    .theme-light .lego-walkthrough-card {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+    }
+    .lego-title { font-family: var(--ff-display); font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--text); margin-bottom: 1rem; line-height: 1.1; }
+    .lego-subtitle { font-size: 1.25rem; color: var(--muted); line-height: 1.4; max-width: 600px; margin: 0 auto; }
+    
+    .scenarios-grid { display: flex; flex-direction: column; gap: 4rem; }
+    
+    .scenario-box { 
+        padding: 0;
+    }
+    
+    .scenario-header { font-family: var(--ff-display); font-weight: 800; color: var(--brand-pink); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    
+    .scenario-items { list-style: none; padding: 0; margin-bottom: 2rem; display: grid; gap: 0.75rem; }
+    .scenario-items li { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.5rem; }
+    .theme-light .scenario-items li { border-bottom-color: rgba(0,0,0,0.03); }
+    .scenario-items li .label { color: var(--muted); }
+    .scenario-items li .value { font-weight: 700; color: var(--text); }
+    .scenario-items li .value.no { color: var(--muted); text-decoration: line-through; opacity: 0.5; }
+    
+    .result-minimal { text-align: right; margin-top: 1rem; }
+    .result-minimal .calc { font-size: 0.95rem; color: var(--muted); margin-bottom: 0.25rem; font-weight: 500; }
+    .result-minimal .total { font-family: var(--ff-display); font-size: 2rem; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+
+    @media (max-width: 768px) {
+        .lego-walkthrough-card { padding: 2rem 1.5rem; }
+        .scenario-items li { flex-direction: column; gap: 0.2rem; }
+    }
+</style>

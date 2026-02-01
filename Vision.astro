@@ -1,0 +1,150 @@
+---
+import ContactForm from './ContactForm.astro';
+---
+
+<section class="vision-section">
+    <div class="container">
+        <div class="vision-content">
+            <div class="vision-text">
+                <p class="vision-intro">Mira, con todo esto de la IA, que cada semana tenemos novedades que merecen ser noticia. Dime una cosa, ¿cómo sería tu día si lo usaras en tu empresa?</p>
+                
+                <div class="vision-dialogue mt-10">
+                    <p class="text-subtle italic">Sí, claro…</p>
+                    <p class="vision-highlight">“Ya uso IA.”</p>
+                </div>
+
+                <div class="vision-reality mt-6">
+                    <p>He visto unos nuevos agentes por LinkedIn y uso unos Prompts increíbles.</p>
+                    <div class="dialogue-tight">
+                        <p class="italic">Si, los tienes.</p>
+                        <p>Y tu competencia también.</p>
+                    </div>
+                </div>
+
+                <div class="vision-core mt-10">
+                    <p>Te hablo de <span class="text-emphasis">sujetar la pantalla con las dos manos</span>, flipando con lo que la IA hace con tus datos.</p>
+                    <p>Ver circulitos girando y querer más para resolver las dudas que todos tenemos:</p>
+                    <p class="question-impact mt-4">¿Cómo c*j*n*s lo ha hecho?</p>
+                </div>
+
+                <p class="vision-final mt-10">Ver cómo, en minutos, la IA hace con tus datos lo que a ti te lleva horas.</p>
+            </div>
+
+            <!-- New Collapsible Form Section -->
+            <div class="vision-action-wrapper mt-16 text-center">
+                <button id="toggleVisionForm" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.2rem;">Pulsa para verlo en tu propia empresa</button>
+                
+                <div id="visionFormContainer" class="collapsible-form-container mt-8">
+                    <div class="form-inner card">
+                         <ContactForm title="4 datos y agendamos una demo." cta="Quiero agendar mi demo" id="vision" isSlim={true} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const trigger = document.getElementById('toggleVisionForm');
+    const container = document.getElementById('visionFormContainer');
+    
+    trigger?.addEventListener('click', () => {
+        container?.classList.toggle('active');
+        if(container?.classList.contains('active')) {
+            trigger.textContent = "Cerrar";
+        } else {
+            trigger.textContent = "Pulsa para verlo en tu propia empresa";
+        }
+    });
+</script>
+
+<style>
+    .vision-section {
+        padding-top: clamp(1rem, 3vw, 2rem); /* Reduced padding to connect with Hero */
+        padding-bottom: var(--section-spacing);
+        background: radial-gradient(circle at 10% 50%, color-mix(in oklab, var(--brand-purple) 8%, transparent) 0%, transparent 50%);
+    }
+
+    .vision-content {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .vision-text {
+        font-size: 1.25rem;
+        line-height: 1.5;
+    }
+
+    .vision-intro {
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .vision-dialogue { line-height: 1.1; }
+    .text-subtle { color: var(--muted); opacity: 0.8; font-size: 1.1rem; }
+    .vision-highlight {
+        font-family: var(--ff-display);
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-top: -0.25rem;
+    }
+
+    .dialogue-tight p { margin-bottom: 0; line-height: 0.95; }
+    .vision-reality p {
+        margin-bottom: 1rem;
+    }
+
+    .text-emphasis {
+        color: var(--text);
+        font-weight: 800;
+        text-decoration: underline decoration-brand-pink decoration-2 underline-offset-4;
+    }
+
+    .question-impact {
+        font-family: var(--ff-display);
+        font-size: clamp(1.44rem, 3.2vw, 2rem);
+        font-weight: 900;
+        color: var(--brand-purple);
+        letter-spacing: -0.03em;
+        line-height: 1;
+    }
+
+    .vision-final {
+        font-weight: 700;
+        color: var(--text);
+        border-left: 4px solid var(--brand-pink);
+        padding-left: 1.5rem;
+        line-height: 1.3;
+    }
+
+    /* Collapsible Form Styling */
+    .collapsible-form-container {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        perspective: 1000px;
+    }
+    .collapsible-form-container.active {
+        max-height: 800px;
+        opacity: 1;
+        margin-top: 3rem;
+    }
+    .form-inner {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: 0 40px 100px -20px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 768px) {
+        .vision-text { font-size: 1.15rem; }
+        .vision-highlight { font-size: 2.2rem; }
+        .question-impact { font-size: 1.6rem; }
+    }
+</style>

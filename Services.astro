@@ -1,0 +1,86 @@
+---
+---
+<section id="servicios">
+    <div class="container">
+      <h2 class="section-title text-center">Nuestros pilares</h2>
+      
+      <!-- Intro Text Block -->
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h3 class="text-2xl font-bold mb-4" style="font-family: var(--ff-display); letter-spacing: -0.03em; font-weight: 800;">Tecnología punta, pero con cabeza</h3>
+        <div class="space-y-4 text-2xl text-muted" style="line-height: 1.4; letter-spacing: -0.01em;">
+            <p>No empezamos automatizando.</p>
+            <p>Empezamos entendiendo tu negocio, detectando el cuello de botella y decidiendo qué merece ser automatizado y qué no.</p>
+            
+            <div class="separator-dots" style="margin: 2rem auto;"><span></span><span></span><span></span></div>
+            
+            <p class="accent-text font-bold text-3xl mt-6" style="letter-spacing: -0.04em;">La IA no es el fin. Es la palanca.</p>
+        </div>
+      </div>
+      
+      <div class="grid-3">
+        <div class="card service-card">
+          <div class="icon-box">⚡</div>
+          <h3>Automatización con n8n</h3>
+          <p><strong>Facturas que se procesan solas.</strong></p>
+          <p>Datos que fluyen entre sistemas sin copias, sin errores y sin que nadie tenga que “acordarse”.</p>
+          <p class="mt-4 text-sm text-muted">Lo administrativo deja de consumir energía mental. Funciona en segundo plano.</p>
+        </div>
+        
+        <div class="card service-card">
+          <div class="icon-box">🤖</div>
+          <h3>Chatbots Inteligentes</h3>
+          <div class="chip-container mb-3">
+            <span class="chip-xs">web</span><span class="chip-xs">WhatsApp</span><span class="chip-xs">email</span>
+          </div>
+          <p><strong>Agentes de IA que entienden el contexto, no solo palabras.</strong></p>
+          <p>Atienden, filtran, responden y cierran cuando toca.</p>
+          <p class="mt-4 text-sm font-bold">Mientras tú: vendes, decides, o directamente no estás.</p>
+        </div>
+        
+        <div class="card service-card">
+          <div class="icon-box">🧩</div>
+          <h3>Soluciones a Medida</h3>
+          <p><strong>No usamos plantillas.</strong></p>
+          <p>Diseñamos la arquitectura de datos y los flujos alrededor del cuello de botella real de tu negocio.</p>
+          <p class="mt-4 text-sm text-muted">Cada sistema tiene un motivo. Cada automatización, un impacto claro.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<style>
+    section { padding: var(--s-8) 0; } /* increased padding */
+    .text-center { text-align: center; }
+    .section-desc { max-width: 600px; margin: 0 auto; color: var(--muted); font-size: 1.1rem; }
+    
+    .service-card { 
+        padding: var(--s-7); 
+        display: flex; flex-direction: column; gap: 1rem;
+    }
+    .service-card h3 {
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+    }
+    .service-card p {
+        line-height: 1.5;
+    }
+    
+    .icon-box { 
+        width: 60px; height: 60px; 
+        background: var(--brand-gradient);
+        box-shadow: 0 4px 15px rgba(200, 59, 165, 0.2);
+        border-radius: 14px; display: flex; align-items: center; justify-content: center; 
+        font-size: 1.8rem; margin-bottom: 1rem;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .chip-container { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .chip-xs { font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 6px; color: var(--muted); font-weight: 600; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .text-lg { font-size: 1.15rem; line-height: 1.6; }
+
+    /* Separators */
+    .separator-dots { display: flex; gap: 8px; justify-content: center; }
+    .separator-dots span { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); opacity: 0.3; }
+</style>

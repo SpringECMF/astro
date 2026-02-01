@@ -1,0 +1,144 @@
+---
+---
+<section id="automation-types" style="background: var(--bg); border-top: 1px solid var(--border);">
+    <div class="container">
+      <h2 class="section-title text-center">Tipo de automatizaciones n8n</h2>
+      <p class="section-subtitle text-center" style="margin-top: -1.5rem; margin-bottom: var(--s-8); opacity: 0.8;">Elige el nivel de complejidad que tu negocio necesita</p>
+      
+      <div class="grid-3" style="margin-top: var(--s-6);">
+        <!-- Basic -->
+        <div class="card type-card">
+          <div>
+            <h3>Procesos Basic</h3>
+            <p class="price">1.200€ <span class="period">+ IVA</span></p>
+            <p class="mt-4 font-bold">Incluye:</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>Configuración de n8n y credenciales API necesarias</li>
+                <li>Implementación</li>
+                <li>Pack de entregables</li>
+            </ul>
+          </div>
+          <button class="btn btn-secondary full-width trigger-cta-form">¿Cuáles son basic?</button>
+        </div>
+        
+        <!-- Intermediate (Highlight) -->
+        <div class="card type-card highlight">
+          <div class="badge-float">Más Popular</div>
+          <div>
+            <h3>Procesos Intermediate</h3>
+            <p class="price">2.300€ <span class="period">+ IVA</span></p>
+             <p class="mt-4 font-bold">Incluye:</p>
+             <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>Configuración de n8n y credenciales API necesarias</li>
+                <li>Desarrollo de adaptaciones necesarias sobre Basic</li>
+                <li>Implementación</li>
+                <li>Pack de entregables</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary full-width trigger-cta-form">¿Cuáles son intermediate?</button>
+        </div>
+        
+        <!-- Tailored -->
+        <div class="card type-card">
+          <div>
+            <h3>Tailored (a medida para ti)</h3>
+            <p class="price"><span class="price-prefix">Desde</span> 2.690€ <span class="period">+ IVA</span></p>
+             <p class="mt-4 font-bold">Incluye:</p>
+             <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>Configuración de n8n y credenciales API necesarias</li>
+                <li>Desarrollo específico</li>
+                <li>Implementación</li>
+                <li>Pack de entregables</li>
+            </ul>
+            <p class="caveat-text">* Imprescindible incluir Exploración (audit). Debes añadirlo o es como montar el Lego sin instrucciones (ya me entiendes...) </p>
+          </div>
+          <button class="btn btn-secondary full-width trigger-cta-form">Pide Presupuesto</button>
+        </div>
+      </div>
+    </div>
+</section>
+
+<style>
+    section { 
+        padding-top: var(--section-spacing);
+        padding-bottom: var(--section-spacing);
+    }
+    .text-center { text-align: center; }
+    
+    .type-card { 
+        padding: 2.5rem; 
+        display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+        position: relative;
+        /* Reusing global .card but adding specific constraints */
+        min-height: 520px;
+        text-align: left;
+    }
+    
+    .highlight { 
+        border: 1px solid rgba(200, 59, 165, 0.15); 
+        background: color-mix(in oklab, var(--brand-purple) 3%, var(--surface));
+        box-shadow: 0 10px 30px -15px rgba(200, 59, 165, 0.1);
+        transform: scale(1.01);
+    }
+    .highlight:hover {
+        transform: scale(1.02);
+        border-color: rgba(200, 59, 165, 0.3);
+    }
+    
+    .badge-float {
+        position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+        background: var(--brand-gradient); color: white;
+        padding: 0.35rem 1rem; border-radius: 99px;
+        font-size: 0.8rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.05em;
+        box-shadow: 0 4px 10px rgba(186, 73, 206, 0.3);
+        z-index: 10;
+        white-space: nowrap;
+    }
+
+    h3 { font-size: 1.75rem; font-weight: 800; margin: 0.5rem 0; color: var(--text); font-family: var(--ff-display); letter-spacing: -0.03em; }
+    .price { font-family: var(--ff-display); font-size: 3rem; font-weight: 800; color: var(--text); margin: 0.5rem 0 1.5rem; letter-spacing: -0.04em; }
+    .price .period { font-size: 1.1rem; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+    .price .price-prefix { font-size: 0.8em; font-weight: 400; color: var(--muted); margin-right: 0.2rem; }
+
+    .check-list { list-style: none; padding: 0; margin: 1rem 0 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .check-list li { padding-left: 1.5rem; position: relative; color: var(--text); font-size: 1.05rem; line-height: 1.4; }
+    .check-list li::before { 
+        content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: bold; 
+    }
+
+    .caveat-text {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: 1rem;
+        font-style: italic;
+        line-height: 1.5;
+    }
+
+    .full-width { 
+        width: 100%; justify-content: center; text-align: center; 
+        padding: 1rem; font-weight: 700; border-radius: 12px; 
+        font-size: 1.1rem; transition: all 0.2s;
+    }
+    .btn-secondary.full-width { 
+        background: var(--bg); color: var(--text); border: 1px solid var(--border);
+    }
+    .btn-secondary.full-width:hover { background: var(--surface); border-color: var(--muted); }
+
+    .btn-primary.full-width { 
+        background: var(--brand-gradient); color: white; border: none;
+        box-shadow: 0 4px 15px rgba(186, 73, 206, 0.3);
+    }
+    .btn-primary.full-width:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(186, 73, 206, 0.4); }
+    
+    .section-subtitle {
+        color: var(--muted);
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: var(--ff-display);
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+    }
+</style>

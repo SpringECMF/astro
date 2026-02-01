@@ -1,0 +1,195 @@
+---
+interface Props {
+    title?: string;
+    subtitle?: string;
+    cta?: string;
+    id?: string;
+    isSlim?: boolean;
+}
+
+const { 
+    title = "Muéstrame cómo funcionaría en mi empresa", 
+    subtitle = 'Rellena el formulario y vemos tu negocio a lo "mente-fría".',
+    cta = "Quítame tareas de encima",
+    id = "contact",
+    isSlim = false
+} = Astro.props;
+---
+
+<div class={`card form-card mx-auto ${isSlim ? 'slim-card' : ''}`} id={`${id}FormContainer`}>
+    <div class="form-header">
+        <h3 class="form-title">{title}</h3>
+        <p>{subtitle}</p>
+    </div>
+    <form id={`${id}Form`} class="hero-form">
+        <input type="text" name="b_check" class="hidden" tabindex="-1" autocomplete="off" style="display:none;">
+        
+        <div class="form-grid">
+            <!-- Row 1 -->
+            <div class="input-group">
+                <label class="label-text" for="name">Nombre</label>
+                <input id="name" name="name" type="text" placeholder="Tu nombre" required>
+            </div>
+            <div class="input-group">
+                <label class="label-text" for="company">Empresa</label>
+                <input id="company" name="company" type="text" placeholder="Nombre de tu empresa" required>
+            </div>
+            
+            <!-- Row 2 -->
+            <div class="input-group span-full">
+                <label class="label-text" for="email">Correo Profesional</label>
+                <input id="email" name="email" type="email" placeholder="tu@empresa.com" required>
+            </div>
+            
+            <!-- Row 3 -->
+            <div class="input-group span-full">
+                <label class="label-text" for="challenge">Tu Reto Actual</label>
+                <input id="challenge" name="challenge" type="text" placeholder="¿Qué proceso te roba más tiempo?" required>
+            </div>
+
+            <div class="span-full privacy-wrapper">
+                <label class="checkbox-container">
+                    <input type="checkbox" name="privacy" required>
+                    <span class="checkmark"></span>
+                    <span class="label-text">He leído y acepto la política de privacidad</span>
+                </label>
+            </div>
+
+            <div class="span-full">
+                <button class="btn btn-primary full-width" type="submit">Quítame tareas de encima</button>
+            </div>
+        </div>
+        
+        <p id="formStatus" class="form-footer text-center" style="margin-top:0.5rem; color: var(--green); display:none;"></p>
+    </form>
+</div>
+
+<script>
+    // Handle all forms with class .hero-form to support multiple instances
+    document.querySelectorAll('.hero-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formEl = e.target as HTMLFormElement;
+            const btn = formEl.querySelector('button');
+            const status = formEl.parentElement?.querySelector('p[id$="Status"]') as HTMLElement;
+            const originalText = btn ? btn.textContent : 'Enviar';
+            
+            if(btn) btn.textContent = "Procesando...";
+
+            // Simulate
+            await new Promise(r => setTimeout(r, 1500));
+            
+            if(btn) btn.textContent = "¡Solicitado!";
+            if(status) {
+                status.style.display = 'block';
+                status.textContent = "¡Gracias! En breve contactaremos contigo.";
+            }
+            formEl.reset();
+            
+            setTimeout(() => {
+                    if(btn) btn.textContent = originalText;
+                    if(status) status.style.display = 'none';
+            }, 3000);
+        });
+    });
+</script>
+
+<style>
+    .form-card {
+        width: 100%; max-width: 650px;
+        background: color-mix(in oklab, var(--surface) 90%, transparent);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border);
+        padding: 3rem;
+        box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6);
+        border-radius: 24px;
+    }
+    .form-title { margin: 0; font-size: 2.2rem; color: var(--text); font-family: var(--ff-display); font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem;}
+    .form-header { text-align: center; margin-bottom: 2rem; }
+    .form-header p { margin: 0; color: var(--muted); font-size: 1.1rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .span-full { grid-column: 1 / -1; }
+    .label-text { display: block; font-size: 0.95rem; color: var(--muted); margin-bottom: 0.5rem; font-weight: 500; }
+    .privacy-wrapper .label-text { display: inline; margin-bottom: 0; vertical-align: middle; cursor: pointer;}
+    
+    input[type="text"], input[type="email"] { 
+        width: 100%; background: var(--bg); color: var(--text); 
+        border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.2rem; 
+        font-family: var(--ff-body); font-size: 1.1rem; transition: all 0.2s;
+    }
+    input:focus { outline: none; border-color: var(--brand-purple); box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand-purple) 20%, transparent); }
+    
+    /* Circular Checkbox Styles */
+    .checkbox-container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        user-select: none;
+    }
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 24px;
+        width: 24px;
+        background-color: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        transition: all 0.2s;
+    }
+    .checkbox-container:hover input ~ .checkmark {
+        border-color: var(--brand-purple);
+    }
+    .checkbox-container input:checked ~ .checkmark {
+        background-color: var(--brand-purple);
+        border-color: var(--brand-purple);
+    }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+    .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+    .checkbox-container .checkmark:after {
+        left: 8px;
+        top: 4px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+    
+    .theme-light .form-card {
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+    }
+    
+    .full-width { width: 100%; justify-content: center; padding: 1.2rem; font-size: 1.2rem; margin-top: 1rem; color: white !important; }
+    .form-footer { font-size: 1rem !important; margin-top: 1rem;}
+
+    .slim-card {
+        padding: 2rem;
+        border-radius: 20px;
+    }
+    .slim-card .form-title {
+        font-size: 1.6rem;
+    }
+
+    @media (max-width: 640px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .form-title { font-size: 1.8rem; }
+    }
+</style>

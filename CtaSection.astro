@@ -1,0 +1,150 @@
+---
+import ContactForm from './ContactForm.astro';
+---
+<section id="cta" class="cta-section">
+    <div class="container cta-wrapper">
+          <h2 class="cta-title">
+            El mejor momento fue ayer. <br> 
+            <span class="cta-gradient">El segundo mejor es hoy.</span>
+          </h2>
+          <p class="cta-desc">Empieza a automatizar y deja de trabajar en cosas que un robot haría mejor.</p>
+          
+          <div class="cta-actions justify-center mb-0 mt-8">
+            <button id="toggleCtaForm" class="btn btn-primary btn-cta">Recuperar mi tiempo</button>
+          </div>
+          
+           <!-- Dropdown Form Container -->
+            <div id="ctaFormContainer" class="hidden overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 0; opacity: 0;">
+                <div class="mt-8 mb-4 text-left max-w-3xl mx-auto">
+                    <ContactForm />
+                </div>
+            </div>
+    </div>
+</section>
+
+<script>
+    function toggleCtaForm(show) {
+        const btnCta = document.getElementById('toggleCtaForm');
+        const containerCta = document.getElementById('ctaFormContainer');
+        const ctaSection = document.getElementById('cta'); // This ID was removed from HTML, might need adjustment if used elsewhere
+
+        if(btnCta && containerCta) {
+            const isHidden = containerCta.classList.contains('hidden');
+            
+            // If show is true, or if undefined (legacy toggle), determine action
+            const shouldOpen = show === true || (show === undefined && isHidden);
+
+            if(shouldOpen) {
+                 if(isHidden) {
+                     containerCta.classList.remove('hidden');
+                     setTimeout(() => {
+                         containerCta.style.maxHeight = '1000px'; 
+                         containerCta.style.opacity = '1';
+                     }, 10);
+                     btnCta.textContent = "Cerrar formulario";
+                 }
+                 // Scroll to section if triggered from outside
+                 // Note: 'cta' ID was removed from the section, this scroll might not work as expected.
+                 if(show === true && ctaSection) {
+                     ctaSection.scrollIntoView({ behavior: 'smooth' });
+                 }
+            } else {
+                 if(!isHidden) {
+                     containerCta.style.maxHeight = '0';
+                     containerCta.style.opacity = '0';
+                     setTimeout(() => {
+                         containerCta.classList.add('hidden');
+                     }, 500); 
+                     btnCta.textContent = "Recuperar mi tiempo";
+                 }
+            }
+        }
+    }
+
+    // Main Toggle Button
+    const btnCta = document.getElementById('toggleCtaForm');
+    if(btnCta) btnCta.addEventListener('click', () => toggleCtaForm());
+
+    // Global Triggers (e.g. from Pricing)
+    document.querySelectorAll('.trigger-cta-form').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleCtaForm(true);
+        });
+    });
+</script>
+
+<style>
+    .cta-section {
+        padding-top: var(--section-spacing);
+        padding-bottom: var(--section-spacing);
+        background: #ffffff; /* Base light background per reference image */
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    /* Nebula Glow Effect */
+    .cta-section::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 140%;
+        height: 140%;
+        background: radial-gradient(circle at center, rgba(75, 42, 140, 0.08) 0%, rgba(200, 59, 165, 0.04) 30%, transparent 60%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .cta-wrapper {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+    }
+
+    .cta-title {
+        font-family: var(--ff-display);
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 850;
+        line-height: 1.05;
+        letter-spacing: -0.05em;
+        color: #000000;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-gradient {
+        background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-pink) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    .cta-desc {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        color: #5B6577;
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.4;
+    }
+
+    .btn-cta {
+        padding: 1.1rem 2.5rem;
+        font-size: 1.15rem;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(186, 73, 206, 0.2);
+    }
+
+    .hidden { display: none; }
+    .justify-center { justify-content: center; }
+
+    /* Dark mode override to keep it readable if user toggles */
+    :global(.theme-dark) .cta-section { background: #0B1220; }
+    :global(.theme-dark) .cta-title { color: #ffffff; }
+    :global(.theme-dark) .cta-desc { color: var(--muted); }
+    :global(.theme-dark) .cta-section::before {
+        background: radial-gradient(circle at center, rgba(186, 73, 206, 0.15) 0%, transparent 70%);
+    }
+</style>
