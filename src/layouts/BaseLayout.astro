@@ -1,0 +1,177 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "El club de la mente fría — Automatización con IA para PYMES" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100..900&family=Ysabeau+SC:wght@300&family=Zalando+Sans:ital,wght,wdth@0,100..900,62.5..125;1,100..900,62.5..125&display=swap" rel="stylesheet">
+
+    <!-- GTM Placeholder -->
+    <script is:inline>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+    </script>
+</head>
+<body class="theme-dark">
+    <slot />
+    
+    <script is:inline>
+        // Dark/Light toggle with localStorage
+        const body = document.body;
+        // Logic to restore theme immediately to prevent flash is handled by default class but let's check JS
+        const stored = localStorage.getItem('ecmf-theme');
+        if (stored === 'light') body.classList.replace('theme-dark','theme-light');
+    </script>
+</body>
+</html>
+
+<style is:global>
+    :root {
+      /* Core palette (tokens) */
+      --brand-purple: #4B2A8C; /* aprox del logo */
+      --brand-pink: #C83BA5;   /* aprox del gradiente logo */
+      --brand-gradient: linear-gradient(90deg, var(--brand-purple), var(--brand-pink));
+
+      --blue-50: #E6F3FF;
+      --blue-100: #CFEAFF;
+      --blue-300: #30A3FF; /* personal */
+      --blue-400: #0F9BFF; /* personal */
+      --blue-600: #005FA1; /* personal */
+      --blue-700: #004C82; /* personal */
+      --blue-800: #00365C; /* personal (navy p/ fondo) */
+
+      --green: #15C38E; /* éxito */
+      --yellow: #F5C542; /* warning */
+      --red: #F45050;    /* error */
+
+      /* Neutrales */
+      --bg: #0B1220;         /* fondo dark base */
+      --surface: #101929;    /* tarjetas dark */
+      --text: #EAF0FF;       /* texto alto contraste */
+      --muted: #A9B4C8;      /* texto secundario */
+      --border: #223147;     /* bordes dark */
+
+      /* Spacing scale */
+      --s-1: .25rem;
+      --s-2: .5rem;
+      --s-3: .75rem;
+      --s-4: 1rem;
+      --s-5: 1.5rem;
+      --s-6: 2rem;
+      --s-7: 3rem;
+      --s-8: 4rem;
+
+      --section-spacing: clamp(4rem, 10vw, 8rem);
+
+      /* Radius & shadows */
+      --radius: 16px;
+      --shadow-1: 0 1px 2px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.24);
+
+      /* Typography */
+      --ff-display: "Zalando Sans", "Space Grotesk", system-ui;
+      --ff-body: "Zalando Sans", "Inter", system-ui;
+      --ff-wdth-semi: 112.5;
+    }
+
+    /* Light mode */
+    .theme-light {
+      --bg: #ffffff;
+      --surface: #F6F8FC;
+      --text: #0A0F1A;
+      --muted: #5B6577;
+      --border: #E0E6F0;
+    }
+
+    * { box-sizing: border-box; font-family: inherit; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--ff-body); line-height: 1.6; 
+      font-variation-settings: 'wdth' var(--ff-wdth-semi);
+      /* Increased base font size by ~20% (16px * 1.2 = 19.2px) */
+      font-size: 1.2rem; 
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Layout Utilities */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--s-5); }
+    
+    /* Global Component Styles */
+    .section-title { 
+      font-family: var(--ff-display); 
+      font-weight: 800; 
+      font-size: clamp(2.2rem, 5vw, 3.2rem); 
+      margin-bottom: var(--s-6); 
+      letter-spacing: -0.04em; 
+      line-height: 1.1;
+      font-variation-settings: 'wdth' 100, 'wght' 800; 
+    }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+    @media (max-width: 960px){ .grid-3{ grid-template-columns: 1fr; } }
+
+    .card { 
+      background: color-mix(in oklab, var(--surface) 80%, transparent); 
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      border-radius: var(--radius); 
+      padding: var(--s-6); 
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease;
+    }
+    .theme-light .card {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 30px -15px rgba(0,0,0,0.1);
+    }
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .theme-light .card:hover {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+    .card h3 { font-family: var(--ff-display); font-weight: 700; margin-top: 0; font-size: 1.4rem; }
+    .card p { color: var(--muted); font-size: 1.1rem; }
+
+    /* Button Styles */
+    .btn { --btn-bg: var(--brand-purple); --btn-fg: #fff; border: 1px solid transparent; color: var(--btn-fg); background: var(--btn-bg);
+      padding: 1rem 1.4rem; border-radius: 12px; font-weight: 700; letter-spacing: -0.01em; text-decoration:none; display:inline-flex; align-items:center; gap: .6rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid color-mix(in oklab, var(--btn-bg) 65%, white); outline-offset: 2px; }
+    .btn-primary { 
+      background: var(--brand-gradient); 
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 15px rgba(200, 59, 165, 0.3);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px rgba(200, 59, 165, 0.4);
+    }
+    .btn-secondary { --btn-bg: transparent; --btn-fg: var(--text); border-color: var(--border); background: color-mix(in oklab, var(--surface) 40%, transparent); backdrop-filter: blur(5px); }
+
+    /* Utility */
+    .accent-text { background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .text-muted { color: var(--muted); }
+    .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .6rem; border-radius:999px; background: color-mix(in oklab, var(--blue-800) 35%, transparent); border:1px solid var(--border); font-weight:600; font-size:.85rem; }
+    .list { display:grid; gap:.5rem; padding-left: 1rem; }
+    .list li { margin-left: .5rem; }
+    .kpi { font-weight: 700; color: var(--blue-300); }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+</style>
