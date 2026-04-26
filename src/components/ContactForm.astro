@@ -21,7 +21,7 @@ const {
         <h3 class="form-title">{title}</h3>
         <p>{subtitle}</p>
     </div>
-    <form id={`${id}Form`} class="hero-form">
+    <form id={`${id}Form`} class="hero-form" data-form-source={id}>
         <input type="text" name="b_check" class="hidden" tabindex="-1" autocomplete="off" style="display:none;">
         
         <div class="form-grid">
@@ -65,31 +65,54 @@ const {
 </div>
 
 <script>
-    // Handle all forms with class .hero-form to support multiple instances
+    import { supabase } from '../lib/supabase.js';
+
     document.querySelectorAll('.hero-form').forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formEl = e.target as HTMLFormElement;
-            const btn = formEl.querySelector('button');
-            const status = formEl.parentElement?.querySelector('p[id$="Status"]') as HTMLElement;
-            const originalText = btn ? btn.textContent : 'Enviar';
-            
-            if(btn) btn.textContent = "Procesando...";
 
-            // Simulate
-            await new Promise(r => setTimeout(r, 1500));
-            
-            if(btn) btn.textContent = "¡Solicitado!";
-            if(status) {
+            // Honeypot anti-spam: si b_check tiene valor, es un bot
+            const honeypot = formEl.querySelector<HTMLInputElement>('[name="b_check"]');
+            if (honeypot?.value) return;
+
+            const btn = formEl.querySelector('button[type="submit"]') as HTMLButtonElement;
+            const status = formEl.parentElement?.querySelector('p[id$="Status"]') as HTMLElement;
+            const originalText = btn?.textContent ?? 'Enviar';
+            const data = new FormData(formEl);
+
+            if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+
+            const { error } = await supabase.from('leads').insert({
+                nombre:           data.get('name'),
+                email:            data.get('email'),
+                empresa:          data.get('company'),
+                mensaje:          data.get('challenge'),
+                fuente:           formEl.dataset.formSource ?? 'desconocido',
+            });
+
+            if (error) {
+                if (status) {
+                    status.style.color = 'var(--brand-pink)';
+                    status.style.display = 'block';
+                    status.textContent = 'Algo falló. Por favor inténtalo de nuevo.';
+                }
+                if (btn) { btn.textContent = originalText; btn.disabled = false; }
+                return;
+            }
+
+            if (btn) btn.textContent = '¡Enviado!';
+            if (status) {
+                status.style.color = 'var(--green)';
                 status.style.display = 'block';
-                status.textContent = "¡Gracias! En breve contactaremos contigo.";
+                status.textContent = '¡Gracias! En breve contactaremos contigo.';
             }
             formEl.reset();
-            
+
             setTimeout(() => {
-                    if(btn) btn.textContent = originalText;
-                    if(status) status.style.display = 'none';
-            }, 3000);
+                if (btn) { btn.textContent = originalText; btn.disabled = false; }
+                if (status) status.style.display = 'none';
+            }, 4000);
         });
     });
 </script>

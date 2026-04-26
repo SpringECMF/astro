@@ -32,7 +32,7 @@ const isFooter = variant === 'footer';
             ) : (
                 <h4 class="newsletter-label">Newsletter</h4>
             )}
-            <form class="newsletter-form" action="#" method="post">
+            <form class="newsletter-form" data-form-source={variant}>
                 <input id={isFooter ? "newsEmailFooter" : "newsEmail"} type="email" name="email" placeholder="tu@email.com" class="flex-grow" required>
                 <div class="privacy-row">
                     <label class="checkbox-container">
@@ -47,6 +47,41 @@ const isFooter = variant === 'footer';
       </div>
     </div>
 </section>
+
+<script>
+    import { supabase } from '../lib/supabase.js';
+
+    document.querySelectorAll('.newsletter-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formEl = e.target as HTMLFormElement;
+            const btn = formEl.querySelector('button[type="submit"]') as HTMLButtonElement;
+            const data = new FormData(formEl);
+            const email = data.get('email') as string;
+            const originalText = btn?.textContent ?? 'Suscribirme';
+
+            if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+
+            const { error } = await supabase.from('newsletter_subscribers').insert({
+                email,
+                fuente: formEl.dataset.formSource ?? 'desconocido',
+            });
+
+            // El error code 23505 es unique_violation (email ya existe — no es un error real)
+            if (error && error.code !== '23505') {
+                if (btn) { btn.textContent = 'Error. Inténtalo de nuevo.'; btn.disabled = false; }
+                setTimeout(() => { if (btn) btn.textContent = originalText; }, 3000);
+                return;
+            }
+
+            if (btn) btn.textContent = '¡Suscrito!';
+            formEl.reset();
+            setTimeout(() => {
+                if (btn) { btn.textContent = originalText; btn.disabled = false; }
+            }, 4000);
+        });
+    });
+</script>
 
 <style>
     .newsletter-secondary {

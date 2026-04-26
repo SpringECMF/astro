@@ -5,3 +5,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+
+# Variables de entorno — nunca al repo
+.env
+.env.local
+.env.*.local
