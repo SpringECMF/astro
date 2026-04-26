@@ -25,6 +25,10 @@ create table if not exists newsletter_subscribers (
     activo     boolean default true
 );
 
+-- ── Limpiar artefactos de versiones anteriores ──────
+-- (El RULE del schema v1 bloquea inserts en Supabase REST)
+DROP RULE IF EXISTS newsletter_upsert ON newsletter_subscribers;
+
 -- ── RLS ─────────────────────────────────────────────
 alter table leads enable row level security;
 alter table newsletter_subscribers enable row level security;
