@@ -8,81 +8,40 @@
       <div class="grid-3">
         <!-- Card 1 -->
         <div class="card service-card">
-          <div class="icon-box">🤖</div>
-          <h3>Orquestación de Agentes de IA</h3>
+          <h3 class="service-title">Orquestación de Agentes de IA</h3>
           <p>Agentes que actúan dentro de tus procesos. Entrenados con el conocimiento real de tu empresa. Se validan entre sí antes de ejecutar. Sin supervisión. Sin errores por descuido.</p>
-          <button id="toggleService1" class="btn-toggle" aria-expanded="false">Saber más ▾</button>
-          <div id="serviceDetail1" class="service-detail hidden" style="max-height: 0; opacity: 0;">
-            <p>No delegas en una máquina ciega. Delegas en un sistema que conoce tus procesos, tu documentación, tu forma de hacer las cosas — y que se autocomprueba antes de actuar, como haría un equipo bien coordinado.</p>
-            <p class="mt-4 font-bold">El resultado: decisiones ejecutadas con criterio, aunque tú estés en otra cosa.</p>
-          </div>
+          <p class="service-result">El resultado: decisiones ejecutadas con criterio, aunque tú estés en otra cosa.</p>
+          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
         </div>
 
         <!-- Card 2 -->
         <div class="card service-card">
-          <div class="icon-box">⚡</div>
-          <h3>Automatización de Procesos con IA</h3>
+          <h3 class="service-title">Automatización de Procesos con IA</h3>
           <p>Identificamos qué procesos te comen más horas. Los conectamos. Los automatizamos. Y los dejamos funcionando sin que tú toques una sola tecla después.</p>
-          <button id="toggleService2" class="btn-toggle" aria-expanded="false">Saber más ▾</button>
-          <div id="serviceDetail2" class="service-detail hidden" style="max-height: 0; opacity: 0;">
-            <p>Llevas meses diciéndote que ya lo automatizarás cuando tengas tiempo. Y el tiempo nunca llega porque estás ocupado haciendo exactamente esas tareas.</p>
-            <p class="mt-4 font-bold">El resultado: horas devueltas, errores eliminados, equipo liberado para lo que de verdad importa.</p>
-          </div>
+          <p class="service-result">El resultado: horas devueltas, errores eliminados, equipo liberado para lo que de verdad importa.</p>
+          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
         </div>
 
         <!-- Card 3 -->
         <div class="card service-card">
-          <div class="icon-box">🧠</div>
-          <h3>Formación en IA para tu empresa</h3>
+          <h3 class="service-title">Formación en IA para tu empresa</h3>
           <p>El interés en IA existe. El problema es que se queda en el despacho de dirección. Formamos a tu equipo — con sus tareas reales, sus herramientas reales — para que la IA pase del PowerPoint al día a día.</p>
-          <button id="toggleService3" class="btn-toggle" aria-expanded="false">Saber más ▾</button>
-          <div id="serviceDetail3" class="service-detail hidden" style="max-height: 0; opacity: 0;">
-            <p>En la mayoría de empresas la IA es un tema de management. El resto del equipo la ve de lejos, con interés pero sin saber cómo. Eso tiene solución.</p>
-            <p class="mt-4 font-bold">El resultado: una empresa donde la IA no es cosa de unos pocos. Es de todos.</p>
-          </div>
+          <p class="service-result">El resultado: una empresa donde la IA no es cosa de unos pocos. Es de todos.</p>
+          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
         </div>
       </div>
     </div>
 </section>
 
-<script>
-    function setupToggle(triggerId: string, contentId: string) {
-        const trigger = document.getElementById(triggerId) as HTMLButtonElement | null;
-        const content = document.getElementById(contentId);
-
-        if (!trigger || !content) return;
-
-        trigger.addEventListener('click', () => {
-            const isHidden = content.classList.contains('hidden');
-            if (isHidden) {
-                content.classList.remove('hidden');
-                setTimeout(() => {
-                    content.style.maxHeight = '600px';
-                    content.style.opacity = '1';
-                }, 10);
-                trigger.textContent = 'Cerrar ▴';
-                trigger.setAttribute('aria-expanded', 'true');
-            } else {
-                content.style.maxHeight = '0';
-                content.style.opacity = '0';
-                setTimeout(() => {
-                    content.classList.add('hidden');
-                }, 500);
-                trigger.textContent = 'Saber más ▾';
-                trigger.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-
-    setupToggle('toggleService1', 'serviceDetail1');
-    setupToggle('toggleService2', 'serviceDetail2');
-    setupToggle('toggleService3', 'serviceDetail3');
-</script>
-
 <style>
     section { padding: var(--s-8) 0; }
     .text-center { text-align: center; }
-    .section-desc { max-width: 600px; margin: 0 auto var(--s-8); color: var(--muted); font-size: clamp(1.1rem, 2.5vw, 1.4rem); }
+    .section-desc {
+        max-width: 600px;
+        margin: 0 auto var(--s-8);
+        color: var(--muted);
+        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    }
 
     .service-card {
         padding: var(--s-7);
@@ -90,55 +49,50 @@
         flex-direction: column;
         gap: 1rem;
     }
-    .service-card h3 {
+
+    .service-title {
+        font-family: var(--ff-display);
+        font-size: 1.5rem;
         font-weight: 800;
         letter-spacing: -0.03em;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
     }
+
     .service-card p {
         line-height: 1.5;
+        color: var(--text);
     }
 
-    .icon-box {
-        width: 60px; height: 60px;
-        background: var(--brand-gradient);
-        box-shadow: 0 4px 15px rgba(200, 59, 165, 0.2);
-        border-radius: 14px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-        border: 1px solid rgba(255,255,255,0.2);
+    .service-result {
+        color: var(--muted);
+        font-size: 0.95rem;
+        font-style: italic;
+        margin-top: 0.25rem;
     }
 
-    .btn-toggle {
+    .btn-cta-service {
         margin-top: auto;
+        width: fit-content;
         background: none;
         border: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.9rem;
+        color: var(--text);
+        font-size: 0.95rem;
         font-weight: 600;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
+        padding: 0.65rem 1.2rem;
+        border-radius: 10px;
         cursor: pointer;
-        text-align: left;
-        transition: color 0.2s, border-color 0.2s;
         font-family: inherit;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
-    .btn-toggle:hover {
-        color: var(--text);
-        border-color: var(--text);
+    .btn-cta-service:hover {
+        background: var(--brand-gradient);
+        border-color: transparent;
+        color: white;
+        -webkit-text-fill-color: white;
     }
-
-    .service-detail {
-        color: var(--text);
-        font-size: 1rem;
-        line-height: 1.6;
-        overflow: hidden;
-        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    }
-    .service-detail p { margin-bottom: 0.25rem; }
-    .service-detail.hidden { display: block; }
-
-    .mt-4 { margin-top: 1rem; }
-    .font-bold { font-weight: 700; }
 </style>
