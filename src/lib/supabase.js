@@ -10,4 +10,4 @@ if (!url || !key) {
 // createClient lanza si recibe undefined — guard para que el resto de scripts no mueran
 export const supabase = (url && key)
     ? createClient(url, key)
-    : { from: () => ({ insert: async () => ({ error: { code: 'ENV_MISSING', message: 'Supabase no configurado' } }) }) } as any;
+    : { from: () => ({ insert: async () => ({ error: { code: 'ENV_MISSING', message: 'Supabase no configurado' } }) }) };
