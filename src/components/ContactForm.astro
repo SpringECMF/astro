@@ -162,7 +162,8 @@ const {
 
             if (error) {
                 console.error('[Supabase leads]', error.code, error.message);
-                setStatusBar(form, 'Algo salió mal. Por favor inténtalo de nuevo.', 'error');
+                const devMsg = import.meta.env.DEV ? ` [${error.code}: ${error.message}]` : '';
+                setStatusBar(form, `Algo salió mal. Por favor inténtalo de nuevo.${devMsg}`, 'error');
                 if (btn) { btn.textContent = originalText; btn.disabled = false; }
                 return;
             }
