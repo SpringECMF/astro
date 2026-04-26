@@ -28,13 +28,12 @@
         <div class="card pricing-card">
           <div>
             <h3 class="gradient-text">2. Desarrollo & Implementación</h3>
-            <p class="price"><span class="price-prefix">Desde</span> 1.200€ <span class="period">+ IVA</span></p>
-            <div style="margin-top: 1.5rem; margin-bottom: 2rem;">
-                <p class="price-caveat gradient-text" style="font-size: 1rem; font-weight: 700;">Elige el servicio que necesitas en la sección anterior y lo construimos desde aquí.</p>
-            </div>
+            <p class="price-from">Desde</p>
+            <p class="price">1.200€ <span class="period">+ IVA</span></p>
+            <p class="price-caveat gradient-text">Elige el servicio que necesitas en la sección anterior y lo construimos desde aquí.</p>
             <p class="desc">Con las piezas claras, empezamos a construir.</p>
             <div class="step-detail">
-                <p class="mt-4"><strong>Bloque a bloque. <br> Todo encaja.</strong></p>
+                <p><strong>Bloque a bloque. Todo encaja.</strong></p>
             </div>
           </div>
         </div>
@@ -189,9 +188,17 @@
         text-transform: uppercase; letter-spacing: 0.05em;
     }
 
-    .price { font-family: var(--ff-display); font-size: 2.8rem; font-weight: 800; color: var(--text); margin: var(--s-2) 0; letter-spacing: -0.04em; }
+    .price-from {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.25rem;
+    }
+    .price { font-family: var(--ff-display); font-size: 2.8rem; font-weight: 800; color: var(--text); margin: 0 0 var(--s-2); letter-spacing: -0.04em; white-space: nowrap; }
     .price .period { font-size: 1rem; color: var(--muted); font-weight: 400; letter-spacing: 0; }
-    .price .price-prefix { font-size: 0.8em; font-weight: 400; color: var(--muted); margin-right: 0.2rem; }
+    .price-caveat { font-size: 0.95rem; font-weight: 700; margin-bottom: var(--s-3); line-height: 1.5; }
     .desc { margin-bottom: var(--s-4); color: var(--muted); line-height: 1.5; min-height: 3em;}
 
     .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
