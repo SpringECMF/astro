@@ -28,8 +28,10 @@
         <div class="card pricing-card">
           <div>
             <h3 class="gradient-text">2. Desarrollo & Implementación</h3>
-            <p class="price-from">Desde</p>
-            <p class="price">1.200€ <span class="period">+ IVA</span></p>
+            <div class="price-row">
+                <span class="price-desde">Desde</span>
+                <p class="price">1.200€ <span class="period">+ IVA</span></p>
+            </div>
             <p class="price-caveat gradient-text">Elige el servicio que necesitas en la sección anterior y lo construimos desde aquí.</p>
             <p class="desc">Con las piezas claras, empezamos a construir.</p>
             <div class="step-detail">
@@ -188,17 +190,32 @@
         text-transform: uppercase; letter-spacing: 0.05em;
     }
 
-    .price-from {
-        font-size: 0.75rem;
+    /* Alinea "Desde" en la misma línea que el precio, sin añadir altura extra */
+    .price-row {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        gap: 0.4rem;
+        margin: var(--s-2) 0;
+    }
+    .price-desde {
+        font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 0.25rem;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
-    .price { font-family: var(--ff-display); font-size: 2.8rem; font-weight: 800; color: var(--text); margin: 0 0 var(--s-2); letter-spacing: -0.04em; white-space: nowrap; }
+    .price { font-family: var(--ff-display); font-size: 2.8rem; font-weight: 800; color: var(--text); margin: var(--s-2) 0; letter-spacing: -0.04em; white-space: nowrap; }
+    .price-row .price { margin: 0; }
     .price .period { font-size: 1rem; color: var(--muted); font-weight: 400; letter-spacing: 0; }
     .price-caveat { font-size: 0.95rem; font-weight: 700; margin-bottom: var(--s-3); line-height: 1.5; }
+
+    /* Desktop: iguala la altura del bloque de título para que los precios queden alineados */
+    @media (min-width: 768px) {
+        .pricing-card h3 { min-height: 4rem; display: flex; align-items: flex-start; }
+    }
     .desc { margin-bottom: var(--s-4); color: var(--muted); line-height: 1.5; min-height: 3em;}
 
     .check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
