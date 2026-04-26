@@ -24,96 +24,150 @@ const {
     <form id={`${id}Form`} class="hero-form" data-form-source={id}>
         <input type="text" name="b_check" class="hidden" tabindex="-1" autocomplete="off" style="display:none;">
         
-        <div class="form-grid">
-            <!-- Row 1 -->
+        <div class="form-grid" id={`${id}Grid`}>
             <div class="input-group">
-                <label class="label-text" for="name">Nombre</label>
-                <input id="name" name="name" type="text" placeholder="Tu nombre" required>
+                <label class="label-text" for={`${id}-name`}>Nombre <span class="required">*</span></label>
+                <input id={`${id}-name`} name="name" type="text" placeholder="Tu nombre" autocomplete="given-name">
+                <span class="field-error" data-for="name" aria-live="polite"></span>
             </div>
             <div class="input-group">
-                <label class="label-text" for="company">Empresa</label>
-                <input id="company" name="company" type="text" placeholder="Nombre de tu empresa" required>
+                <label class="label-text" for={`${id}-company`}>Empresa <span class="required">*</span></label>
+                <input id={`${id}-company`} name="company" type="text" placeholder="Nombre de tu empresa" autocomplete="organization">
+                <span class="field-error" data-for="company" aria-live="polite"></span>
             </div>
-            
-            <!-- Row 2 -->
+
             <div class="input-group span-full">
-                <label class="label-text" for="email">Correo Profesional</label>
-                <input id="email" name="email" type="email" placeholder="tu@empresa.com" required>
+                <label class="label-text" for={`${id}-email`}>Correo Profesional <span class="required">*</span></label>
+                <input id={`${id}-email`} name="email" type="email" placeholder="tu@empresa.com" autocomplete="email">
+                <span class="field-error" data-for="email" aria-live="polite"></span>
             </div>
-            
-            <!-- Row 3 -->
+
             <div class="input-group span-full">
-                <label class="label-text" for="challenge">Tu Reto Actual</label>
-                <input id="challenge" name="challenge" type="text" placeholder="¿Qué proceso te roba más tiempo?" required>
+                <label class="label-text" for={`${id}-challenge`}>Tu Reto Actual <span class="required">*</span></label>
+                <input id={`${id}-challenge`} name="challenge" type="text" placeholder="¿Qué proceso te roba más tiempo?">
+                <span class="field-error" data-for="challenge" aria-live="polite"></span>
             </div>
 
             <div class="span-full privacy-wrapper">
                 <label class="checkbox-container">
-                    <input type="checkbox" name="privacy" required>
+                    <input type="checkbox" name="privacy">
                     <span class="checkmark"></span>
-                    <span class="label-text">He leído y acepto la política de privacidad</span>
+                    <span class="label-text">He leído y acepto la política de privacidad <span class="required">*</span></span>
                 </label>
+                <span class="field-error privacy-error" data-for="privacy" aria-live="polite"></span>
             </div>
 
             <div class="span-full">
                 <button class="btn btn-primary full-width" type="submit">Quítame tareas de encima</button>
             </div>
         </div>
-        
-        <p id="formStatus" class="form-footer text-center" style="margin-top:0.5rem; color: var(--green); display:none;"></p>
+
+        <div class="form-status-bar" aria-live="polite"></div>
     </form>
+
+    <div class="form-success" style="display:none;" aria-hidden="true">
+        <div class="success-icon">✓</div>
+        <h4 class="success-title">¡Solicitud recibida!</h4>
+        <p class="success-msg">En 24-48 horas nos ponemos en contacto contigo.</p>
+    </div>
 </div>
 
 <script>
     import { supabase } from '../lib/supabase.js';
 
-    document.querySelectorAll('.hero-form').forEach(form => {
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const RULES: Record<string, (v: string) => string> = {
+        name:      v => v.trim() ? '' : 'El nombre es obligatorio.',
+        company:   v => v.trim() ? '' : 'La empresa es obligatoria.',
+        email:     v => !v.trim() ? 'El correo es obligatorio.' : !EMAIL_RE.test(v) ? 'Introduce un correo válido.' : '',
+        challenge: v => v.trim() ? '' : 'Cuéntanos tu reto principal.',
+    };
+
+    function setFieldError(form: HTMLFormElement, name: string, msg: string) {
+        const input = form.querySelector<HTMLInputElement>(`[name="${name}"]`);
+        const errEl = form.querySelector<HTMLElement>(`.field-error[data-for="${name}"]`);
+        if (input) input.classList.toggle('input-error', !!msg);
+        if (errEl) errEl.textContent = msg;
+    }
+
+    function clearAllErrors(form: HTMLFormElement) {
+        form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+        form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+        setStatusBar(form, '', '');
+    }
+
+    function setStatusBar(form: HTMLFormElement, msg: string, type: 'success' | 'error' | '') {
+        const bar = form.closest('.form-card')?.querySelector<HTMLElement>('.form-status-bar');
+        if (!bar) return;
+        bar.textContent = msg;
+        bar.className = `form-status-bar${type ? ' form-status-bar--' + type : ''}`;
+    }
+
+    function showSuccess(form: HTMLFormElement) {
+        const card = form.closest('.form-card');
+        form.style.display = 'none';
+        const successEl = card?.querySelector<HTMLElement>('.form-success');
+        if (successEl) { successEl.style.display = 'flex'; successEl.removeAttribute('aria-hidden'); }
+    }
+
+    document.querySelectorAll<HTMLFormElement>('.hero-form').forEach(form => {
+        // Validación en tiempo real al salir del campo
+        form.querySelectorAll<HTMLInputElement>('input[name]').forEach(input => {
+            input.addEventListener('blur', () => {
+                const rule = RULES[input.name];
+                if (rule) setFieldError(form, input.name, rule(input.value));
+            });
+            input.addEventListener('input', () => {
+                if (input.classList.contains('input-error')) {
+                    const rule = RULES[input.name];
+                    if (rule) setFieldError(form, input.name, rule(input.value));
+                }
+            });
+        });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formEl = e.target as HTMLFormElement;
 
-            // Honeypot anti-spam: si b_check tiene valor, es un bot
-            const honeypot = formEl.querySelector<HTMLInputElement>('[name="b_check"]');
+            // Honeypot
+            const honeypot = form.querySelector<HTMLInputElement>('[name="b_check"]');
             if (honeypot?.value) return;
 
-            const btn = formEl.querySelector('button[type="submit"]') as HTMLButtonElement;
-            const status = formEl.parentElement?.querySelector('p[id$="Status"]') as HTMLElement;
-            const originalText = btn?.textContent ?? 'Enviar';
-            const data = new FormData(formEl);
+            clearAllErrors(form);
 
-            if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+            const data = new FormData(form);
+            let valid = true;
+
+            for (const [field, rule] of Object.entries(RULES)) {
+                const msg = rule(data.get(field) as string ?? '');
+                if (msg) { setFieldError(form, field, msg); valid = false; }
+            }
+            if (!data.get('privacy')) {
+                setFieldError(form, 'privacy', 'Debes aceptar la política de privacidad.');
+                valid = false;
+            }
+            if (!valid) return;
+
+            const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+            const originalText = btn?.textContent ?? 'Enviar';
+            if (btn) { btn.textContent = 'Enviando…'; btn.disabled = true; }
 
             const { error } = await supabase.from('leads').insert({
-                nombre:           data.get('name'),
-                email:            data.get('email'),
-                empresa:          data.get('company'),
-                mensaje:          data.get('challenge'),
-                fuente:           formEl.dataset.formSource ?? 'desconocido',
+                nombre:  (data.get('name') as string).trim(),
+                email:   (data.get('email') as string).trim(),
+                empresa: (data.get('company') as string).trim(),
+                mensaje: (data.get('challenge') as string).trim(),
+                fuente:  form.dataset.formSource ?? 'desconocido',
             });
 
             if (error) {
-                console.error('[Supabase leads] Error al insertar:', error);
-                if (status) {
-                    status.style.color = 'var(--brand-pink)';
-                    status.style.display = 'block';
-                    status.textContent = 'Algo falló. Por favor inténtalo de nuevo.';
-                }
+                console.error('[Supabase leads]', error.code, error.message);
+                setStatusBar(form, 'Algo salió mal. Por favor inténtalo de nuevo.', 'error');
                 if (btn) { btn.textContent = originalText; btn.disabled = false; }
                 return;
             }
 
-            if (btn) btn.textContent = '¡Enviado!';
-            if (status) {
-                status.style.color = 'var(--green)';
-                status.style.display = 'block';
-                status.textContent = '¡Gracias! En breve contactaremos contigo.';
-            }
-            formEl.reset();
-
-            setTimeout(() => {
-                if (btn) { btn.textContent = originalText; btn.disabled = false; }
-                if (status) status.style.display = 'none';
-            }, 4000);
+            showSuccess(form);
         });
     });
 </script>
@@ -133,8 +187,53 @@ const {
     .form-header p { margin: 0; color: var(--muted); font-size: 1.1rem; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
     .span-full { grid-column: 1 / -1; }
+    .input-group { display: flex; flex-direction: column; }
     .label-text { display: block; font-size: 0.95rem; color: var(--muted); margin-bottom: 0.5rem; font-weight: 500; }
     .privacy-wrapper .label-text { display: inline; margin-bottom: 0; vertical-align: middle; cursor: pointer;}
+    .required { color: var(--brand-pink); font-size: 0.85em; }
+
+    /* Error states */
+    .field-error {
+        font-size: 0.78rem;
+        color: var(--brand-pink);
+        margin-top: 0.3rem;
+        min-height: 1rem;
+        display: block;
+    }
+    .privacy-error { display: block; margin-top: 0.3rem; padding-left: 35px; }
+    input.input-error { border-color: var(--brand-pink) !important; }
+
+    /* Form-level status bar */
+    .form-status-bar { font-size: 0.9rem; border-radius: 8px; text-align: center; display: none; margin-top: 0.75rem; }
+    .form-status-bar--error {
+        display: block;
+        padding: 0.65rem 1rem;
+        background: rgba(233,30,140,0.08);
+        color: var(--brand-pink);
+        border: 1px solid rgba(233,30,140,0.2);
+    }
+
+    /* Success overlay */
+    .form-success {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 3rem 2rem;
+        gap: 1rem;
+    }
+    .success-icon {
+        width: 56px; height: 56px;
+        border-radius: 50%;
+        background: rgba(34,197,94,0.15);
+        color: #16a34a;
+        font-size: 1.6rem;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700;
+    }
+    .success-title { font-family: var(--ff-display); font-size: 1.6rem; font-weight: 800; color: var(--text); margin: 0; }
+    .success-msg { color: var(--muted); font-size: 1rem; margin: 0; }
     
     input[type="text"], input[type="email"] { 
         width: 100%; background: var(--bg); color: var(--text); 

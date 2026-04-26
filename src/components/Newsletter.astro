@@ -32,16 +32,21 @@ const isFooter = variant === 'footer';
             ) : (
                 <h4 class="newsletter-label">Newsletter</h4>
             )}
-            <form class="newsletter-form" data-form-source={variant}>
-                <input id={isFooter ? "newsEmailFooter" : "newsEmail"} type="email" name="email" placeholder="tu@email.com" class="flex-grow" required>
+            <form class="newsletter-form" data-form-source={variant} novalidate>
+                <div class="nl-field">
+                    <input id={isFooter ? "newsEmailFooter" : "newsEmail"} type="email" name="email" placeholder="tu@email.com" required autocomplete="email">
+                    <span class="nl-field-error" aria-live="polite"></span>
+                </div>
                 <div class="privacy-row">
                     <label class="checkbox-container">
                         <input type="checkbox" name="privacy" required>
                         <span class="checkmark"></span>
                         <span class="label-text">He leído y acepto la política de privacidad</span>
                     </label>
+                    <span class="nl-field-error privacy-error" aria-live="polite"></span>
                 </div>
                 <button class="btn btn-primary mt-4 w-full" type="submit">{isFooter ? 'Suscribirme' : 'Recibir ideas útiles'}</button>
+                <div class="nl-status" aria-live="polite"></div>
             </form>
         </div>
       </div>
@@ -51,36 +56,78 @@ const isFooter = variant === 'footer';
 <script>
     import { supabase } from '../lib/supabase.js';
 
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setFieldError(form: HTMLFormElement, fieldName: string, msg: string) {
+        const input = form.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
+        const errEl = fieldName === 'privacy'
+            ? form.querySelector<HTMLElement>('.privacy-error')
+            : input?.closest('.nl-field')?.querySelector<HTMLElement>('.nl-field-error');
+        if (input) input.classList.toggle('input-error', !!msg);
+        if (errEl) errEl.textContent = msg;
+    }
+
+    function clearErrors(form: HTMLFormElement) {
+        form.querySelectorAll('.nl-field-error').forEach(el => el.textContent = '');
+        form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+    }
+
+    function setStatus(form: HTMLFormElement, msg: string, type: 'success' | 'error' | '') {
+        const el = form.querySelector<HTMLElement>('.nl-status');
+        if (!el) return;
+        el.textContent = msg;
+        el.className = `nl-status${type ? ' nl-status--' + type : ''}`;
+    }
+
     document.querySelectorAll('.newsletter-form').forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formEl = e.target as HTMLFormElement;
-            const btn = formEl.querySelector('button[type="submit"]') as HTMLButtonElement;
+            const btn = formEl.querySelector<HTMLButtonElement>('button[type="submit"]');
             const data = new FormData(formEl);
-            const email = data.get('email') as string;
+            const email = (data.get('email') as string).trim();
+            const privacy = data.get('privacy');
             const originalText = btn?.textContent ?? 'Suscribirme';
 
-            if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+            clearErrors(formEl);
+            setStatus(formEl, '', '');
+
+            let valid = true;
+            if (!email) {
+                setFieldError(formEl, 'email', 'El email es obligatorio.');
+                valid = false;
+            } else if (!EMAIL_RE.test(email)) {
+                setFieldError(formEl, 'email', 'Introduce un email válido.');
+                valid = false;
+            }
+            if (!privacy) {
+                setFieldError(formEl, 'privacy', 'Debes aceptar la política de privacidad.');
+                valid = false;
+            }
+            if (!valid) return;
+
+            if (btn) { btn.textContent = 'Enviando…'; btn.disabled = true; }
 
             const { error } = await supabase
                 .from('newsletter_subscribers')
-                .upsert(
-                    { email, fuente: formEl.dataset.formSource ?? 'desconocido', activo: true },
-                    { onConflict: 'email', ignoreDuplicates: true }
-                );
+                .insert({ email, fuente: formEl.dataset.formSource ?? 'desconocido' });
 
             if (error) {
-                console.error('[Supabase newsletter] Error al insertar:', error);
-                if (btn) { btn.textContent = 'Error. Inténtalo de nuevo.'; btn.disabled = false; }
-                setTimeout(() => { if (btn) btn.textContent = originalText; }, 3000);
-                return;
+                if (error.code === '23505') {
+                    // Email ya suscrito — tratar como éxito silencioso
+                    setStatus(formEl, '¡Ya estás suscrito! Te llegará el siguiente envío.', 'success');
+                } else {
+                    console.error('[Supabase newsletter]', error.code, error.message);
+                    setStatus(formEl, 'Algo salió mal. Por favor inténtalo de nuevo.', 'error');
+                    if (btn) { btn.textContent = originalText; btn.disabled = false; }
+                    return;
+                }
+            } else {
+                setStatus(formEl, '¡Suscrito! Pronto recibirás la primera entrega.', 'success');
             }
 
-            if (btn) btn.textContent = '¡Suscrito!';
             formEl.reset();
-            setTimeout(() => {
-                if (btn) { btn.textContent = originalText; btn.disabled = false; }
-            }, 4000);
+            if (btn) { btn.textContent = originalText; btn.disabled = false; }
         });
     });
 </script>
@@ -163,6 +210,33 @@ const isFooter = variant === 'footer';
 
     .newsletter-form { display:flex; flex-direction: column; gap: var(--s-3); max-width: 400px; }
     .w-full { width: 100%; }
+    .nl-field { display: flex; flex-direction: column; }
+    .nl-field-error, .privacy-error {
+        font-size: 0.78rem;
+        color: var(--brand-pink);
+        margin-top: 0.3rem;
+        min-height: 1rem;
+    }
+    .nl-status {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.9rem;
+        border-radius: 8px;
+        text-align: center;
+        display: none;
+    }
+    .nl-status--success {
+        display: block;
+        background: rgba(34,197,94,0.1);
+        color: #16a34a;
+        border: 1px solid rgba(34,197,94,0.3);
+    }
+    .nl-status--error {
+        display: block;
+        background: rgba(233,30,140,0.08);
+        color: var(--brand-pink);
+        border: 1px solid rgba(233,30,140,0.2);
+    }
+    :global(.theme-light) .nl-status--success { color: #15803d; }
     .privacy-row { width: 100%; margin-top: 0.5rem; }
     input { 
         background: var(--bg); 
