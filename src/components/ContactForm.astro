@@ -92,6 +92,7 @@ const {
             });
 
             if (error) {
+                console.error('[Supabase leads] Error al insertar:', error);
                 if (status) {
                     status.style.color = 'var(--brand-pink)';
                     status.style.display = 'block';

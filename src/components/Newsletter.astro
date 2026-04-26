@@ -62,13 +62,15 @@ const isFooter = variant === 'footer';
 
             if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
 
-            const { error } = await supabase.from('newsletter_subscribers').insert({
-                email,
-                fuente: formEl.dataset.formSource ?? 'desconocido',
-            });
+            const { error } = await supabase
+                .from('newsletter_subscribers')
+                .upsert(
+                    { email, fuente: formEl.dataset.formSource ?? 'desconocido', activo: true },
+                    { onConflict: 'email', ignoreDuplicates: true }
+                );
 
-            // El error code 23505 es unique_violation (email ya existe — no es un error real)
-            if (error && error.code !== '23505') {
+            if (error) {
+                console.error('[Supabase newsletter] Error al insertar:', error);
                 if (btn) { btn.textContent = 'Error. Inténtalo de nuevo.'; btn.disabled = false; }
                 setTimeout(() => { if (btn) btn.textContent = originalText; }, 3000);
                 return;
