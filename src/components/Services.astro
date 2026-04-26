@@ -13,10 +13,10 @@
           <div class="card-featured-inner">
             <div class="featured-left">
               <h3 class="service-title">Orquestación de Agentes de IA</h3>
-              <p class="service-tagline">1 jefe, los demás hacen lo que les piden. Como el director de una orquesta, ajusta cada detalle para que todo funcione bien. Y así el resto es música para tus oídos.</p>
             </div>
             <div class="featured-right">
-              <p>Agentes que actúan dentro de tus procesos. Entrenados con el conocimiento real de tu empresa. Se validan entre sí antes de ejecutar. Sin supervisión. Sin errores por descuido.</p>
+              <p class="service-tagline">1 jefe, los demás hacen lo que les piden. Como el director de una orquesta, ajusta cada detalle para que todo funcione bien. Y así el resto es música para tus oídos.</p>
+              <p class="service-copy">Agentes que actúan dentro de tus procesos. Entrenados con el conocimiento real de tu empresa. Se validan entre sí antes de ejecutar. Sin supervisión. Sin errores por descuido.</p>
               <p class="service-result">El resultado: decisiones ejecutadas con criterio, aunque tú estés en otra cosa.</p>
               <button class="btn-cta-primary trigger-cta-form">Agendar una demo →</button>
             </div>
@@ -98,8 +98,9 @@
 
     .service-result {
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-style: italic;
+        margin-bottom: 1.5rem;
     }
 
     /* ── Card 1: Orquestación — borde gradiente ── */
@@ -128,33 +129,38 @@
 
     .card-featured-inner {
         display: flex;
-        gap: 2.5rem;
+        gap: 3rem;
         align-items: flex-start;
     }
 
     .featured-left {
-        flex: 0 0 38%;
-        display: flex;
-        align-items: flex-start;
+        flex: 0 0 40%;
     }
 
     .featured-left .service-title {
-        font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-    }
-
-    .service-tagline {
-        margin-top: 1.25rem;
-        font-size: 0.9rem;
-        color: var(--muted);
-        line-height: 1.65;
-        max-width: 28ch;
+        font-size: clamp(1.6rem, 2.5vw, 2rem);
+        font-weight: 900;
     }
 
     .featured-right {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0;
+    }
+
+    .service-tagline {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .service-copy {
+        font-size: 0.97rem;
+        color: var(--text);
+        line-height: 1.65;
+        margin-bottom: 0.8rem;
     }
 
     /* ── Card 1 button — primary ── */
@@ -210,13 +216,17 @@
     }
 
     /* ── Responsive ── */
-    @media (max-width: 960px) {
+    @media (max-width: 768px) {
         .card-featured-inner {
             flex-direction: column;
             gap: 1.25rem;
         }
         .featured-left {
             flex: none;
+        }
+        .btn-cta-primary {
+            width: 100%;
+            justify-content: center;
         }
     }
 
