@@ -5,29 +5,42 @@
       <h2 class="section-title text-center">Tu empresa tiene que trabajar aunque tú no estés.</h2>
       <p class="section-desc text-center">Tres formas de conseguirlo.</p>
 
-      <div class="grid-3">
-        <!-- Card 1 -->
-        <div class="card service-card">
-          <h3 class="service-title">Orquestación de Agentes de IA</h3>
-          <p>Agentes que actúan dentro de tus procesos. Entrenados con el conocimiento real de tu empresa. Se validan entre sí antes de ejecutar. Sin supervisión. Sin errores por descuido.</p>
-          <p class="service-result">El resultado: decisiones ejecutadas con criterio, aunque tú estés en otra cosa.</p>
-          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
+      <div class="services-layout">
+
+        <!-- Card 1: Orquestación — destacada, ancho completo -->
+        <div class="card service-card card-featured">
+          <div class="badge-star">Servicio estrella</div>
+          <div class="card-featured-inner">
+            <div class="featured-left">
+              <h3 class="service-title">Orquestación de Agentes de IA</h3>
+            </div>
+            <div class="featured-right">
+              <p>Agentes que actúan dentro de tus procesos. Entrenados con el conocimiento real de tu empresa. Se validan entre sí antes de ejecutar. Sin supervisión. Sin errores por descuido.</p>
+              <p class="service-result">El resultado: decisiones ejecutadas con criterio, aunque tú estés en otra cosa.</p>
+              <button class="btn-cta-primary trigger-cta-form">Agendar una demo →</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="card service-card">
-          <h3 class="service-title">Automatización de Procesos con IA</h3>
-          <p>Identificamos qué procesos te comen más horas. Los conectamos. Los automatizamos. Y los dejamos funcionando sin que tú toques una sola tecla después.</p>
-          <p class="service-result">El resultado: horas devueltas, errores eliminados, equipo liberado para lo que de verdad importa.</p>
-          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
-        </div>
+        <!-- Cards 2 y 3: grid 2 columnas -->
+        <div class="services-grid-2">
 
-        <!-- Card 3 -->
-        <div class="card service-card">
-          <h3 class="service-title">Formación en IA para tu empresa</h3>
-          <p>El interés en IA existe. El problema es que se queda en el despacho de dirección. Formamos a tu equipo — con sus tareas reales, sus herramientas reales — para que la IA pase del PowerPoint al día a día.</p>
-          <p class="service-result">El resultado: una empresa donde la IA no es cosa de unos pocos. Es de todos.</p>
-          <button class="btn-cta-service trigger-cta-form">Agendar una demo →</button>
+          <!-- Card 2: Automatización -->
+          <div class="card service-card card-accent-pink">
+            <h3 class="service-title">Automatización de Procesos con IA</h3>
+            <p>Identificamos qué procesos te comen más horas. Los conectamos. Los automatizamos. Y los dejamos funcionando sin que tú toques una sola tecla después.</p>
+            <p class="service-result">El resultado: horas devueltas, errores eliminados, equipo liberado para lo que de verdad importa.</p>
+            <button class="btn-cta-secondary trigger-cta-form">Agendar una demo →</button>
+          </div>
+
+          <!-- Card 3: Formación -->
+          <div class="card service-card card-accent-purple">
+            <h3 class="service-title">Formación en IA para tu empresa</h3>
+            <p>El interés en IA existe. El problema es que se queda en el despacho de dirección. Formamos a tu equipo — con sus tareas reales, sus herramientas reales — para que la IA pase del PowerPoint al día a día.</p>
+            <p class="service-result">El resultado: una empresa donde la IA no es cosa de unos pocos. Es de todos.</p>
+            <button class="btn-cta-secondary trigger-cta-form">Agendar una demo →</button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -43,11 +56,30 @@
         font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     }
 
+    /* ── Layout ── */
+    .services-layout {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s-5);
+    }
+
+    .services-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s-5);
+    }
+
+    /* ── Base card ── */
     .service-card {
         padding: var(--s-7);
         display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .service-card p {
+        line-height: 1.5;
+        color: var(--text);
     }
 
     .service-title {
@@ -63,19 +95,91 @@
         color: transparent;
     }
 
-    .service-card p {
-        line-height: 1.5;
-        color: var(--text);
-    }
-
     .service-result {
         color: var(--muted);
         font-size: 0.95rem;
         font-style: italic;
-        margin-top: 0.25rem;
     }
 
-    .btn-cta-service {
+    /* ── Card 1: Orquestación — borde gradiente ── */
+    .card.card-featured {
+        position: relative;
+        border: 1px solid transparent;
+        background:
+            linear-gradient(var(--surface), var(--surface)) padding-box,
+            var(--brand-gradient) border-box;
+    }
+
+    .badge-star {
+        position: absolute;
+        top: -13px;
+        right: 1.5rem;
+        background: var(--brand-gradient);
+        color: white;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.3rem 0.85rem;
+        border-radius: 99px;
+        white-space: nowrap;
+    }
+
+    .card-featured-inner {
+        display: flex;
+        gap: 2.5rem;
+        align-items: flex-start;
+    }
+
+    .featured-left {
+        flex: 0 0 38%;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .featured-left .service-title {
+        font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    }
+
+    .featured-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* ── Card 1 button — primary ── */
+    .btn-cta-primary {
+        width: fit-content;
+        background: var(--brand-gradient);
+        border: none;
+        color: white;
+        -webkit-text-fill-color: white;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: opacity 0.2s, transform 0.15s;
+        box-shadow: 0 4px 16px rgba(186, 73, 206, 0.25);
+    }
+    .btn-cta-primary:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+    }
+
+    /* ── Cards 2 & 3: borde superior de acento ── */
+    .card-accent-pink {
+        border-top: 3px solid var(--brand-pink);
+    }
+
+    .card-accent-purple {
+        border-top: 3px solid var(--brand-purple);
+    }
+
+    /* ── Cards 2 & 3 button — secondary (outline) ── */
+    .btn-cta-secondary {
         margin-top: auto;
         width: fit-content;
         background: none;
@@ -89,10 +193,27 @@
         font-family: inherit;
         transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
-    .btn-cta-service:hover {
+    .btn-cta-secondary:hover {
         background: var(--brand-gradient);
         border-color: transparent;
         color: white;
         -webkit-text-fill-color: white;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+        .card-featured-inner {
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .featured-left {
+            flex: none;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .services-grid-2 {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
