@@ -21,27 +21,11 @@ import ContactForm from './ContactForm.astro';
       <!-- 3. The Narrative (Tension) -->
       <div class=”narrative-container mb-20 px-4”>
         <div class=”narrative-consolidated fade-in delay-1”>
-            <div class=”narrative-segment”>
-                <p>Cierras el portátil. La oficina casi vacía. Sales tarde, otra vez.</p>
-                <p>¡aaaah!, ¿de verdad ahora? Te acuerdas de esa tarea pendiente. La que sabes hacer con los ojos cerrados, pero te va a robar un par de horas.</p>
-            </div>
-
-            <div class=”narrative-segment”>
-                <p>De repente, el cuerpo se llena de una sensación incómoda. La tarea ya es lo de menos. El texto está escrito:</p>
-                <blockquote class=”pull-quote”>No llego a la cena.</blockquote>
-                <p>Pero tu dedo no se mueve y no es por el cansancio. Es lo que te espera al llegar a casa: ese silencio, esa nada.</p>
-            </div>
-
-            <div class=”narrative-impact”>
-                <p class=”emotional-danger”>Joder… el daño que hace:</p>
-                <p class=”indifference-text”>esa indiferencia debería considerarse arma blanca</p>
-            </div>
-
-            <hr class=”narrative-divider”>
-
-            <div class=”narrative-transition”>
-                <p class=”transition-text”>Si has llegado hasta aquí y esto te suena, lo que viene ahora te interesa. Es algo más que motivación barata.</p>
-            </div>
+            <p>Cierras el portátil. La oficina casi vacía. Sales tarde, otra vez.</p>
+            <p>¡aaaah!, ¿de verdad ahora? Te acuerdas de esa tarea pendiente. La que sabes hacer con los ojos cerrados, pero te va a robar un par de horas.</p>
+            <p>De repente, el cuerpo se llena de una sensación incómoda. La tarea ya es lo de menos. El texto está escrito: <em class=”narrative-quote”>No llego a la cena.</em> Pero tu dedo no se mueve y no es por el cansancio. Es lo que te espera al llegar a casa: ese silencio, esa nada.</p>
+            <p class=”narrative-beat”>Joder… el daño que hace:<br><span class=”narrative-beat-sub”>esa indiferencia debería considerarse arma blanca</span></p>
+            <p class=”narrative-close”>Si has llegado hasta aquí y esto te suena, lo que viene ahora te interesa. Es algo más que motivación barata.</p>
         </div>
       </div>
 
@@ -56,9 +40,9 @@ import ContactForm from './ContactForm.astro';
       <div class="hero-footer-branding mb-20 fade-in delay-11 text-center">
          <div class="branding-footer">
             <h2 class="company-title-large gradient-text-silver text-center">El club de la mente fría</h2>
-            <p class="slogan-problem">¿Sabes ese nudo en el estómago cuando piensas en todo lo que te queda por hacer?</p>
+            <p class="slogan-problem gradient-text-silver">¿Sabes ese nudo en el estómago cuando piensas en todo lo que te queda por hacer?</p>
             <p class="slogan-solution">Pues imagina que desaparece.</p>
-            <p class="slogan-how gradient-text-silver">Agentes de IA y automatización de procesos.<br>Para que tu empresa avance aunque tú no estés mirando.</p>
+            <p class="slogan-how">Agentes de IA y automatización de procesos.<br>Para que tu empresa avance aunque tú no estés mirando.</p>
         </div>
       </div>
       
@@ -118,56 +102,40 @@ import ContactForm from './ContactForm.astro';
     }
 
     /* Narrative */
-    .narrative-container { max-width: 680px; margin-left: auto; margin-right: auto; }
+    .narrative-container { max-width: 720px; margin: 0 auto; }
+    .narrative-consolidated {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        text-align: center;
+    }
     .narrative-consolidated p {
-        font-size: clamp(1.05rem, 1.6vw, 1.15rem);
+        font-size: clamp(1.05rem, 1.6vw, 1.2rem);
         color: var(--muted);
-        line-height: 1.6;
+        line-height: 1.65;
         font-weight: 400;
         letter-spacing: -0.01em;
-        text-align: left;
     }
-
-    .narrative-segment { margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-    .narrative-impact { margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
-
-    .pull-quote {
-        margin: 0.25rem 0;
-        padding: 1rem 1.25rem;
-        border-left: 3px solid var(--brand-pink);
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 0 8px 8px 0;
+    .narrative-quote {
         font-style: italic;
-        font-size: clamp(1.1rem, 1.8vw, 1.25rem);
         color: var(--text);
-        line-height: 1.4;
+        font-weight: 600;
     }
-    :global(.theme-light) .pull-quote {
-        background: rgba(0, 0, 0, 0.025);
+    .narrative-consolidated .narrative-beat {
+        color: var(--text);
+        font-weight: 500;
     }
-
-    .emotional-danger {
-        color: var(--muted);
+    .narrative-beat-sub {
+        display: block;
+        margin-top: 0.25rem;
         font-style: italic;
-    }
-    .indifference-text {
-        font-style: italic;
-        color: var(--muted);
         opacity: 0.65;
-        font-size: 0.95em;
-        text-align: left;
-    }
-
-    .narrative-divider {
-        border: none;
-        border-top: 1px solid var(--border);
-        margin: 2rem 0;
-    }
-
-    .transition-text {
-        color: var(--text);
         font-weight: 400;
-        text-align: left;
+    }
+    .narrative-consolidated .narrative-close {
+        color: var(--text);
+        opacity: 0.85;
+        margin-top: 0.25rem;
     }
 
     /* Promise Peak */
@@ -207,13 +175,13 @@ import ContactForm from './ContactForm.astro';
         margin-bottom: 0.5rem;
     }
     .slogan-problem {
-        font-size: clamp(1rem, 2vw, 1.25rem);
         font-family: var(--ff-display);
-        color: var(--muted);
-        font-weight: 400;
-        line-height: 1.4;
-        max-width: 680px;
-        margin: 0 auto 1.75rem;
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        max-width: 780px;
+        margin: 0.5rem auto 1.75rem;
     }
     .slogan-solution {
         font-family: var(--ff-display);
@@ -229,12 +197,14 @@ import ContactForm from './ContactForm.astro';
         color: transparent;
     }
     .slogan-how {
-        font-size: clamp(1rem, 2vw, 1.25rem);
         font-family: var(--ff-display);
-        font-weight: 500;
-        line-height: 1.5;
-        max-width: 680px;
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.2;
+        max-width: 780px;
         margin: 0 auto;
+        color: var(--text);
     }
     .gradient-text-silver {
         background: linear-gradient(180deg, var(--text) 0%, color-mix(in oklab, var(--text) 30%, transparent) 100%);
