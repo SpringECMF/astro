@@ -1,0 +1,346 @@
+---
+// Banner de consentimiento de cookies — RGPD / ePrivacy
+// Aparece en primera visita o cuando el consentimiento ha caducado (12 meses).
+// Guarda la decisión en localStorage + Supabase para auditoría.
+---
+
+<div
+  id="cookie-banner"
+  class="cb-overlay hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cb-title"
+>
+  <div class="card cb-panel">
+
+    <!-- Cabecera -->
+    <div class="cb-header">
+      <svg class="cb-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="16" fill="url(#cg)" opacity="0.12" stroke="url(#cg)" stroke-width="1.5"/>
+        <circle cx="11" cy="14" r="2.5" fill="url(#cg)"/>
+        <circle cx="21" cy="11" r="2"   fill="url(#cg)"/>
+        <circle cx="23" cy="21" r="3"   fill="url(#cg)"/>
+        <circle cx="13" cy="23" r="2"   fill="url(#cg)"/>
+        <circle cx="18" cy="17" r="1.5" fill="url(#cg)" opacity="0.6"/>
+        <defs>
+          <linearGradient id="cg" x1="2" y1="2" x2="34" y2="34">
+            <stop offset="0%"   stop-color="#4B2A8C"/>
+            <stop offset="100%" stop-color="#C83BA5"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div class="cb-header-text">
+        <h2 id="cb-title" class="cb-title">Tu privacidad, tu elección</h2>
+        <p class="cb-desc">
+          Usamos cookies técnicas imprescindibles para el funcionamiento del sitio.
+          Con tu permiso, activamos analíticas anónimas para mejorar el servicio.
+          Sin publicidad comportamental.
+          <a href="/cookies" class="cb-link">Ver política de cookies</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Panel de categorías (expandible) -->
+    <div id="cb-details" class="cb-details">
+
+      <div class="cb-category">
+        <div class="cb-cat-header">
+          <div class="cb-cat-info">
+            <span class="cb-cat-name">Técnicas y funcionales</span>
+            <span class="badge">Siempre activas</span>
+          </div>
+          <div class="cb-toggle cb-toggle--locked" role="switch" aria-checked="true" aria-label="Siempre activo">
+            <div class="cb-thumb"></div>
+          </div>
+        </div>
+        <p class="cb-cat-desc">
+          Necesarias para que la web funcione correctamente (sesión, seguridad, preferencias de tema).
+          No se pueden desactivar.
+        </p>
+      </div>
+
+      <div class="cb-category">
+        <div class="cb-cat-header">
+          <span class="cb-cat-name">Analíticas</span>
+          <button
+            id="analytics-toggle"
+            class="cb-toggle"
+            role="switch"
+            aria-checked="false"
+            aria-label="Activar cookies analíticas"
+          >
+            <div class="cb-thumb"></div>
+          </button>
+        </div>
+        <p class="cb-cat-desc">
+          Nos permiten medir el número de visitas y analizar el uso del sitio de forma completamente anónima.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Acciones principales -->
+    <div class="cb-actions">
+      <div class="cb-main-btns">
+        <button id="cb-accept-all" class="btn btn-primary cb-btn">Aceptar todo</button>
+        <button id="cb-reject"     class="btn btn-secondary cb-btn">Solo necesarias</button>
+      </div>
+      <button id="cb-customize" class="cb-link-btn">
+        Personalizar
+        <svg id="cb-chevron" class="cb-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Botón guardar (visible solo en modo personalizar) -->
+    <div id="cb-save-row" class="cb-save-row hidden">
+      <button id="cb-save-custom" class="btn btn-primary cb-full-btn">Guardar mis preferencias</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  import { hasValidConsent, saveConsent } from '../lib/cookieConsent.js';
+
+  const banner         = document.getElementById('cookie-banner') as HTMLElement | null;
+  const details        = document.getElementById('cb-details')   as HTMLElement | null;
+  const saveRow        = document.getElementById('cb-save-row')  as HTMLElement | null;
+  const analyticsBtn   = document.getElementById('analytics-toggle') as HTMLButtonElement | null;
+  const chevron        = document.getElementById('cb-chevron')   as SVGElement | null;
+
+  let detailsOpen     = false;
+  let analyticsOn     = false;
+
+  function showBanner() {
+    banner?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hideBanner() {
+    banner?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  // Mostrar si no hay consentimiento válido
+  if (!hasValidConsent()) showBanner();
+
+  // Personalizar — toggle detalle
+  document.getElementById('cb-customize')?.addEventListener('click', () => {
+    detailsOpen = !detailsOpen;
+    if (details) {
+      details.style.maxHeight = detailsOpen ? details.scrollHeight + 'px' : '0';
+      details.style.opacity   = detailsOpen ? '1' : '0';
+    }
+    chevron?.style.setProperty('transform', detailsOpen ? 'rotate(180deg)' : 'rotate(0deg)');
+    saveRow?.classList.toggle('hidden', !detailsOpen);
+  });
+
+  // Toggle analíticas
+  analyticsBtn?.addEventListener('click', () => {
+    analyticsOn = !analyticsOn;
+    analyticsBtn.setAttribute('aria-checked', String(analyticsOn));
+    // Actualizar max-height si el detalle ya estaba abierto (el contenido no cambia de tamaño)
+  });
+
+  // Aceptar todo
+  document.getElementById('cb-accept-all')?.addEventListener('click', () => {
+    hideBanner();
+    saveConsent({ analytics: true, marketing: false }, 'accept_all');
+  });
+
+  // Solo necesarias
+  document.getElementById('cb-reject')?.addEventListener('click', () => {
+    hideBanner();
+    saveConsent({ analytics: false, marketing: false }, 'reject');
+  });
+
+  // Guardar personalizado
+  document.getElementById('cb-save-custom')?.addEventListener('click', () => {
+    hideBanner();
+    saveConsent({ analytics: analyticsOn, marketing: false }, 'custom');
+  });
+
+  // Reabrir desde Footer u otro elemento con data-reopen-cookies
+  document.querySelectorAll('[data-reopen-cookies]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      showBanner();
+    });
+  });
+</script>
+
+<style>
+  /* ── Overlay ────────────────────────────────────────── */
+  .cb-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--s-4);
+    padding-bottom: clamp(1rem, 3vw, 2rem);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .cb-overlay.hidden { display: none; }
+
+  /* ── Panel ──────────────────────────────────────────── */
+  .cb-panel {
+    width: 100%;
+    max-width: 780px;
+    animation: cb-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes cb-up {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  /* ── Cabecera ───────────────────────────────────────── */
+  .cb-header {
+    display: flex;
+    gap: var(--s-4);
+    align-items: flex-start;
+    margin-bottom: var(--s-5);
+  }
+  .cb-icon { flex-shrink: 0; margin-top: 2px; }
+
+  .cb-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin: 0 0 0.4rem;
+  }
+  .cb-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .cb-link { color: var(--brand-pink); text-decoration: none; margin-left: 0.25rem; }
+  .cb-link:hover { text-decoration: underline; }
+
+  /* ── Detalle (expandible) ───────────────────────────── */
+  .cb-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+    margin-bottom: 0;
+  }
+
+  .cb-category {
+    border-top: 1px solid var(--border);
+    padding: var(--s-4) 0;
+  }
+  .cb-cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    margin-bottom: 0.4rem;
+  }
+  .cb-cat-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .cb-cat-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .cb-cat-desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── Toggle switch ──────────────────────────────────── */
+  .cb-toggle {
+    width: 46px;
+    height: 26px;
+    border-radius: 13px;
+    border: none;
+    cursor: pointer;
+    background: var(--border);
+    position: relative;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.25s ease;
+  }
+  .cb-toggle[aria-checked="true"]  { background: var(--brand-gradient); }
+  .cb-toggle--locked {
+    cursor: not-allowed;
+    opacity: 0.85;
+    background: var(--green) !important;
+  }
+  .cb-thumb {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    transition: transform 0.25s ease;
+    pointer-events: none;
+  }
+  .cb-toggle[aria-checked="true"] .cb-thumb { transform: translateX(20px); }
+
+  /* ── Acciones ───────────────────────────────────────── */
+  .cb-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    flex-wrap: wrap;
+    margin-top: var(--s-5);
+  }
+  .cb-main-btns { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+  .cb-btn { padding: 0.75rem 1.3rem; font-size: 0.95rem; }
+
+  .cb-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .cb-link-btn:hover { color: var(--brand-pink); }
+
+  .cb-chevron { transition: transform 0.25s ease; }
+
+  /* ── Fila guardar ───────────────────────────────────── */
+  .cb-save-row {
+    margin-top: var(--s-4);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--border);
+  }
+  .cb-save-row.hidden { display: none; }
+  .cb-full-btn { width: 100%; justify-content: center; }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 580px) {
+    .cb-header      { flex-direction: column; }
+    .cb-icon        { display: none; }
+    .cb-actions     { flex-direction: column; align-items: stretch; }
+    .cb-main-btns   { flex-direction: column; }
+    .cb-btn         { justify-content: center; }
+    .cb-link-btn    { align-self: center; }
+  }
+</style>

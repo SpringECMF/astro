@@ -8,7 +8,8 @@ const currentYear = new Date().getFullYear();
       <div class="links">
         <a href="/aviso-legal" aria-label="Aviso legal">Aviso legal</a>
         <a href="/privacidad" aria-label="Privacidad">Privacidad</a>
-        <a href="/cookies" aria-label="Cookies">Cookies</a>
+        <a href="/cookies" aria-label="Política de cookies">Cookies</a>
+        <button data-reopen-cookies class="footer-cookie-btn" aria-label="Gestionar preferencias de cookies">Gestionar preferencias</button>
       </div>
     </div>
 </footer>
@@ -27,4 +28,10 @@ const currentYear = new Date().getFullYear();
     .links { display:flex; gap: var(--s-6); }
     a { color: var(--muted); text-decoration: none; transition: all 0.2s; font-weight: 500; }
     a:hover { color: var(--brand-pink); }
+    .footer-cookie-btn {
+        background: none; border: none; cursor: pointer;
+        color: var(--muted); font-size: 0.9rem; font-weight: 500;
+        font-family: inherit; padding: 0; transition: color 0.2s;
+    }
+    .footer-cookie-btn:hover { color: var(--brand-pink); }
 </style>

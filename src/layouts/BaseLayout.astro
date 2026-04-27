@@ -1,4 +1,6 @@
 ---
+import CookieBanner from '../components/CookieBanner.astro';
+
 interface Props {
 	title: string;
 	description?: string;
@@ -34,7 +36,8 @@ const { title, description = "El club de la mente fría — Automatización con 
 </head>
 <body class="theme-dark">
     <slot />
-    
+    <CookieBanner />
+
     <script is:inline>
         // Dark/Light toggle with localStorage
         const body = document.body;
