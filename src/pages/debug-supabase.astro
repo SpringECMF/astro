@@ -30,34 +30,31 @@ const urlPreview = import.meta.env.PUBLIC_SUPABASE_URL?.slice(0, 30) + '...' ?? 
 
   <h2>Test de conexión en vivo</h2>
   <pre id="result">Haz clic en "Probar" para ejecutar el test...</pre>
-  <button onclick="runTest()">Probar inserción en leads</button>
+  <button>Probar inserción en leads</button>
 
   <script>
+    import { supabase } from '../lib/supabase.js';
+
     async function runTest() {
       const pre = document.getElementById('result');
       pre.textContent = 'Ejecutando...';
 
-      try {
-        const { supabase } = await import('/src/lib/supabase.js');
-        pre.textContent += '\n✓ Módulo supabase cargado';
+      const { error } = await supabase.from('leads').insert({
+        nombre: 'Test diagnóstico',
+        email: 'debug@ecmf.dev',
+        empresa: 'Debug',
+        mensaje: 'Test automático desde /debug-supabase',
+        fuente: 'debug-page'
+      });
 
-        const { error } = await supabase.from('leads').insert({
-          nombre: 'Test diagnóstico',
-          email: 'debug@ecmf.dev',
-          empresa: 'Debug',
-          mensaje: 'Test automático desde /debug-supabase',
-          fuente: 'debug-page'
-        });
-
-        if (error) {
-          pre.textContent += `\n✗ Error: [${error.code}] ${error.message}`;
-        } else {
-          pre.textContent += '\n✓ INSERT correcto — lead registrado en Supabase';
-        }
-      } catch (e) {
-        pre.textContent += `\n✗ Excepción: ${e.message}`;
+      if (error) {
+        pre.textContent = `✗ Error: [${error.code}] ${error.message}`;
+      } else {
+        pre.textContent = '✓ INSERT correcto — lead registrado en Supabase';
       }
     }
+
+    document.querySelector('button')?.addEventListener('click', runTest);
   </script>
 </body>
 </html>
