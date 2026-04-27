@@ -118,7 +118,7 @@ const isFooter = variant === 'footer';
                     setStatus(formEl, '¡Ya estás suscrito! Te llegará el siguiente envío.', 'success');
                 } else {
                     console.error('[Supabase newsletter]', error.code, error.message);
-                    setStatus(formEl, 'Algo salió mal. Por favor inténtalo de nuevo.', 'error');
+                    setStatus(formEl, `Error [${error.code}]: ${error.message}`, 'error');
                     if (btn) { btn.textContent = originalText; btn.disabled = false; }
                     return;
                 }
