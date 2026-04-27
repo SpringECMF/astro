@@ -15,6 +15,11 @@ const { title, description = "El club de la mente fría — Automatización con 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- TEMPORAL: bloqueo SEO hasta que el dominio de producción esté fijo.
+         Cuando el dominio definitivo esté activo, eliminar esta línea y activar
+         el schema JSON-LD de FAQ.astro. -->
+    <meta name="robots" content="noindex, nofollow" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

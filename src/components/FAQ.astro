@@ -1,0 +1,318 @@
+---
+const faqs = [
+  {
+    q: "¿Esto es para empresas como la mía?",
+    a: "Si tienes entre 5 y 100 personas y hay tareas que se repiten, se hacen a mano o dependen de que alguien esté mirando — sí, es para ti. No necesitas un departamento de IT ni saber qué es una API. Necesitas saber qué te roba horas. El resto lo ponemos nosotros."
+  },
+  {
+    q: "¿Qué diferencia hay entre automatización de procesos y orquestación de agentes?",
+    a: "La automatización conecta pasos que ya existen: si pasa A, ocurre B. Funciona muy bien para procesos repetitivos y lineales. La orquestación de agentes va un paso más allá: agentes entrenados con el conocimiento de tu empresa que toman decisiones, se validan entre sí y ejecutan sin que tú estés encima. Para procesos que necesitan criterio, no solo reglas."
+  },
+  {
+    q: "¿Cuánto tiempo tarda en estar funcionando?",
+    a: "Depende del proceso. Una automatización de procesos básica puede estar en producción en 1-2 semanas. Un sistema de agentes orquestados con lógica compleja, entre 3 y 6 semanas. Antes de tocar nada hacemos la Exploración — 990€ — para saber exactamente qué vas a tener y cuándo."
+  },
+  {
+    q: "¿Qué pasa si algo falla?",
+    a: "Los sistemas que montamos tienen validación entre agentes y alertas configuradas. Pero si algo falla, está el Soporte & Evolución. No te dejamos con un sistema a medias preguntándote a quién llamar. Ajustamos, mejoramos y añadimos piezas cuando el negocio lo pide."
+  },
+  {
+    q: "¿Necesito conocimientos técnicos para usar lo que montáis?",
+    a: "Ninguno. El resultado que tú ves es el proceso funcionando. Lo que hay detrás — flujos, conexiones, agentes — es nuestro problema, no el tuyo. Si en algún momento quieres entender cómo funciona, te lo explicamos. Pero no es un requisito para que funcione."
+  },
+  {
+    q: "¿Puedo empezar solo con la Exploración y decidir después?",
+    a: "Sí, y es lo más sensato si tienes dudas. La Exploración — 990€ + IVA — te da un mapa claro: qué construir, qué no, qué piezas ya tienes y cuáles faltan. Sin suposiciones. Sin compromisos de desarrollo. Con eso ya puedes decidir si sigues, cuándo y con qué."
+  },
+  {
+    q: "¿Para qué procesos funciona mejor esto?",
+    a: "Los que más horas devuelven: captación y seguimiento de leads, onboarding de clientes, generación de reportes, gestión de documentación, atención inicial con agentes de IA, coordinación entre equipos con información dispersa. Si tienes un proceso que alguien hace igual todos los días — es candidato."
+  },
+  {
+    q: "¿Qué incluye el Soporte & Evolución mensual?",
+    a: "No es un contrato de mantenimiento donde pagas por que nada se rompa. Es evolución real: ajustamos lo que el negocio pide, añadimos nuevas piezas cuando tiene sentido, y somos el equipo técnico que no tienes dentro. 490€/mes + IVA. Sin rehacerlo todo. Sin empezar de cero."
+  },
+  {
+    q: "¿Trabajáis con cualquier herramienta o CRM?",
+    a: "Si tiene API — y casi todo hoy la tiene — podemos conectarlo. Trabajamos con el stack que ya tienes: tu CRM, tu herramienta de email, tu ERP, tu sistema de gestión. No te pedimos que cambies nada para empezar."
+  },
+  {
+    q: "¿Qué es la Formación en IA para equipos?",
+    a: "En lugar de pensar que con tocar un botón la IA soluciona todo, es aterrizar en algo que resuelva las tareas reales de tu equipo. Formamos con sus procesos, no con ejemplos genéricos de PowerPoint. El resultado: tus empleados entienden qué papel juegan ellos en el proceso y cómo la IA les ayuda — no les sustituye — en su trabajo diario. No lo vamos a negar, se levantan muchas suspicacias y miedos cuando dices que vas a implementar IA. Las formaciones sirven exactamente para eso: que vean cómo les mejora el trabajo, no cómo se lo quita."
+  }
+];
+---
+
+<section class="faq-section" id="faq">
+  <div class="container">
+    <h2 class="section-title faq-heading">Preguntas frecuentes</h2>
+
+    <div class="faq-list" role="list">
+      {faqs.map((item, i) => (
+        <div class="faq-item" role="listitem">
+          <button
+            class="faq-trigger"
+            aria-expanded="false"
+            aria-controls={`faq-body-${i}`}
+            id={`faq-btn-${i}`}
+          >
+            <span class="faq-question">{item.q}</span>
+            <svg
+              class="faq-chevron"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M5.5 8.5L11 14L16.5 8.5"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <div
+            id={`faq-body-${i}`}
+            class="faq-body"
+            role="region"
+            aria-labelledby={`faq-btn-${i}`}
+          >
+            <p class="faq-answer">{item.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!--
+  Schema FAQ markup — DESACTIVADO hasta que la URL de producción sea definitiva.
+  Activar cuando el dominio esté fijo para no desperdiciar señales SEO en una URL temporal.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Esto es para empresas como la mía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tienes entre 5 y 100 personas y hay tareas que se repiten, se hacen a mano o dependen de que alguien esté mirando — sí, es para ti. No necesitas un departamento de IT ni saber qué es una API. Necesitas saber qué te roba horas. El resto lo ponemos nosotros."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre automatización de procesos y orquestación de agentes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La automatización conecta pasos que ya existen: si pasa A, ocurre B. Funciona muy bien para procesos repetitivos y lineales. La orquestación de agentes va un paso más allá: agentes entrenados con el conocimiento de tu empresa que toman decisiones, se validan entre sí y ejecutan sin que tú estés encima. Para procesos que necesitan criterio, no solo reglas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tiempo tarda en estar funcionando?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del proceso. Una automatización de procesos básica puede estar en producción en 1-2 semanas. Un sistema de agentes orquestados con lógica compleja, entre 3 y 6 semanas. Antes de tocar nada hacemos la Exploración — 990€ — para saber exactamente qué vas a tener y cuándo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si algo falla?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los sistemas que montamos tienen validación entre agentes y alertas configuradas. Pero si algo falla, está el Soporte & Evolución. No te dejamos con un sistema a medias preguntándote a quién llamar. Ajustamos, mejoramos y añadimos piezas cuando el negocio lo pide."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito conocimientos técnicos para usar lo que montáis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ninguno. El resultado que tú ves es el proceso funcionando. Lo que hay detrás — flujos, conexiones, agentes — es nuestro problema, no el tuyo. Si en algún momento quieres entender cómo funciona, te lo explicamos. Pero no es un requisito para que funcione."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo empezar solo con la Exploración y decidir después?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, y es lo más sensato si tienes dudas. La Exploración — 990€ + IVA — te da un mapa claro: qué construir, qué no, qué piezas ya tienes y cuáles faltan. Sin suposiciones. Sin compromisos de desarrollo. Con eso ya puedes decidir si sigues, cuándo y con qué."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Para qué procesos funciona mejor esto?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los que más horas devuelven: captación y seguimiento de leads, onboarding de clientes, generación de reportes, gestión de documentación, atención inicial con agentes de IA, coordinación entre equipos con información dispersa. Si tienes un proceso que alguien hace igual todos los días — es candidato."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué incluye el Soporte & Evolución mensual?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No es un contrato de mantenimiento donde pagas por que nada se rompa. Es evolución real: ajustamos lo que el negocio pide, añadimos nuevas piezas cuando tiene sentido, y somos el equipo técnico que no tienes dentro. 490€/mes + IVA. Sin rehacerlo todo. Sin empezar de cero."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Trabajáis con cualquier herramienta o CRM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tiene API — y casi todo hoy la tiene — podemos conectarlo. Trabajamos con el stack que ya tienes: tu CRM, tu herramienta de email, tu ERP, tu sistema de gestión. No te pedimos que cambies nada para empezar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué es la Formación en IA para equipos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En lugar de pensar que con tocar un botón la IA soluciona todo, es aterrizar en algo que resuelva las tareas reales de tu equipo. Formamos con sus procesos, no con ejemplos genéricos de PowerPoint. El resultado: tus empleados entienden qué papel juegan ellos en el proceso y cómo la IA les ayuda — no les sustituye — en su trabajo diario. No lo vamos a negar, se levantan muchas suspicacias y miedos cuando dices que vas a implementar IA. Las formaciones sirven exactamente para eso: que vean cómo les mejora el trabajo, no cómo se lo quita."
+      }
+    }
+  ]
+}
+</script>
+-->
+
+<script>
+  const faqItems = document.querySelectorAll<HTMLElement>('.faq-item');
+
+  faqItems.forEach(item => {
+    const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
+    const body    = item.querySelector<HTMLElement>('.faq-body');
+    if (!trigger || !body) return;
+
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Cierra todos
+      faqItems.forEach(other => {
+        const t = other.querySelector<HTMLButtonElement>('.faq-trigger');
+        const b = other.querySelector<HTMLElement>('.faq-body');
+        if (!t || !b) return;
+        t.setAttribute('aria-expanded', 'false');
+        b.style.maxHeight = '0';
+        b.style.opacity   = '0';
+        other.classList.remove('is-open');
+      });
+
+      // Abre el actual si estaba cerrado
+      if (!isOpen) {
+        trigger.setAttribute('aria-expanded', 'true');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        body.style.opacity   = '1';
+        item.classList.add('is-open');
+      }
+    });
+  });
+</script>
+
+<style>
+  .faq-section {
+    padding-top: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+    background: color-mix(in oklab, var(--surface) 30%, transparent);
+  }
+
+  .faq-heading {
+    text-align: center;
+  }
+
+  .faq-list {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ── Item ─────────────────────────────────────────── */
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.25s ease;
+  }
+  .faq-item:first-child {
+    border-top: 1px solid var(--border);
+  }
+  .faq-item.is-open {
+    border-bottom-color: color-mix(in oklab, var(--brand-purple) 55%, var(--border));
+  }
+
+  /* ── Trigger ──────────────────────────────────────── */
+  .faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-5);
+    padding: var(--s-5) 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--text);
+    transition: color 0.2s ease;
+  }
+  .faq-trigger:hover {
+    color: color-mix(in oklab, var(--brand-pink) 80%, var(--text));
+  }
+  .faq-trigger:focus-visible {
+    outline: 2px solid var(--brand-purple);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
+  .faq-question {
+    font-family: var(--ff-display);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+    flex: 1;
+  }
+
+  /* ── Chevron ──────────────────────────────────────── */
+  .faq-chevron {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+  .faq-item.is-open .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--brand-pink);
+  }
+
+  /* ── Body / Answer ────────────────────────────────── */
+  .faq-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+  }
+
+  .faq-answer {
+    margin: 0;
+    padding-bottom: var(--s-5);
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  /* ── Mobile ───────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .faq-trigger {
+      padding: var(--s-4) 0;
+      gap: var(--s-3);
+    }
+    .faq-chevron {
+      width: 18px;
+      height: 18px;
+    }
+  }
+</style>
