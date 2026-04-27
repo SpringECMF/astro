@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Aviso Legal — El club de la mente fría"
+  description="Aviso legal e información sobre el titular del sitio web El club de la mente fría."
+>
+  <main class="legal-page">
+    <div class="container">
+
+      <a href="/" class="back-link">← Volver a inicio</a>
+
+      <article class="legal-content">
+        <h1>Aviso Legal</h1>
+
+        <section>
+          <h2>1. Titular de la web</h2>
+          <p>
+            En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa que el titular de este sitio web es:
+          </p>
+          <ul>
+            <li><strong>Nombre:</strong> Daniel Herranz Blázquez</li>
+            <li><strong>NIF/DNI:</strong> 51086259Q</li>
+            <li><strong>Domicilio:</strong> Calle Torre Arias, 25 3A, 28022 Madrid</li>
+            <li><strong>Email:</strong> <a href="mailto:contacto@elclubdelamentefria.com">contacto@elclubdelamentefria.com</a></li>
+            <li><strong>Actividad:</strong> Especialista en automatización e inteligencia artificial.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>2. Objeto y uso</h2>
+          <p>
+            El acceso a este sitio web es gratuito y atribuye la condición de <strong>USUARIO</strong>. El uso de la web implica la aceptación plena de las presentes condiciones de uso.
+          </p>
+          <p>
+            El usuario se compromete a utilizar los servicios de forma diligente, lícita y conforme a la moral y el orden público. Queda expresamente prohibido el uso de la web con fines lesivos para bienes o intereses de terceros, o que de cualquier otra forma sobrecarguen, dañen o inutilicen los servidores del titular.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Limitación de responsabilidad</h2>
+          <p>El titular no se responsabiliza de los daños o perjuicios derivados de:</p>
+          <ul>
+            <li>Errores u omisiones en los contenidos publicados.</li>
+            <li>Falta de disponibilidad del portal por motivos de mantenimiento técnico u otras causas ajenas al titular.</li>
+            <li>Transmisión de virus o programas maliciosos a través de la web, a pesar de haber adoptado las medidas tecnológicas necesarias para prevenirlo.</li>
+            <li>Contenidos de sitios web de terceros enlazados desde esta web (links externos). Los enlaces se facilitan únicamente con finalidad informativa y el titular no controla ni se hace responsable de su contenido.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>4. Propiedad intelectual e industrial</h2>
+          <p>
+            Todos los contenidos de este sitio web (textos, fotografías, logotipos, código fuente, diseño gráfico y cualquier otro elemento) son propiedad del titular o de terceros que han autorizado su uso.
+          </p>
+          <p>
+            Queda expresamente prohibida la reproducción, distribución, comunicación pública o transformación total o parcial de dichos contenidos con fines comerciales sin la autorización previa y por escrito del titular, salvo en los casos previstos por la legislación vigente.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Legislación aplicable y jurisdicción</h2>
+          <p>
+            Las presentes condiciones se rigen por la legislación española. Para la resolución de cualquier controversia derivada del acceso o uso de este sitio web, las partes se someten a los Juzgados y Tribunales del domicilio del titular, salvo que la normativa vigente establezca otro fuero imperativo.
+          </p>
+        </section>
+
+        <p class="legal-updated">Última actualización: abril de 2026.</p>
+      </article>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+    min-height: 100vh;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--brand-pink); }
+
+  .legal-content {
+    max-width: 720px;
+  }
+
+  h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-family: var(--ff-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    margin-top: 0;
+  }
+
+  p {
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    color: var(--muted);
+    line-height: 1.75;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  a {
+    color: var(--brand-pink);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+
+  .legal-updated {
+    font-size: 0.875rem;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>

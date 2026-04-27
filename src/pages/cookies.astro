@@ -1,0 +1,254 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Política de Cookies — El club de la mente fría"
+  description="Información sobre el uso de cookies en El club de la mente fría."
+>
+  <main class="legal-page">
+    <div class="container">
+
+      <a href="/" class="back-link">← Volver a inicio</a>
+
+      <article class="legal-content">
+        <h1>Política de Cookies</h1>
+
+        <section>
+          <h2>1. ¿Qué son las cookies?</h2>
+          <p>
+            Las cookies son pequeños archivos de texto que los sitios web instalan en el navegador o dispositivo del usuario cuando este visita una página. Permiten que el sitio recuerde información sobre tu visita para mejorar tu experiencia en futuras consultas.
+          </p>
+          <p>
+            Pueden ser de sesión (se eliminan al cerrar el navegador) o persistentes (se almacenan durante un tiempo determinado). Asimismo, pueden ser propias (instaladas por el titular del sitio) o de terceros (instaladas por proveedores externos).
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Tipos de cookies que utilizamos</h2>
+
+          <div class="cookie-type">
+            <h3>Técnicas y funcionales <span class="badge">Siempre activas</span></h3>
+            <p>
+              Son estrictamente necesarias para que el sitio web funcione correctamente. Incluyen, por ejemplo, las cookies que recuerdan que has aceptado este aviso de cookies, que gestionan la sesión de uso de la herramienta o que mantienen tus preferencias de navegación. No requieren consentimiento previo.
+            </p>
+          </div>
+
+          <div class="cookie-type">
+            <h3>Analíticas <span class="badge badge-opt">Requieren consentimiento</span></h3>
+            <p>
+              Nos permiten cuantificar el número de visitantes y analizar estadísticamente el uso de la web con el fin de mejorar nuestros contenidos y servicios. Los datos recogidos son anónimos y no permiten identificar a usuarios individuales.
+            </p>
+          </div>
+
+          <div class="cookie-type">
+            <h3>De seguridad <span class="badge">Siempre activas</span></h3>
+            <p>
+              Utilizadas por nuestro proveedor de infraestructura (Cloudflare) para detectar y mitigar ataques maliciosos, proteger la integridad del servidor y garantizar la disponibilidad del servicio. No recopilan datos personales del usuario con fines comerciales.
+            </p>
+          </div>
+
+          <div class="cookie-type cookie-type--note">
+            <p>
+              <strong>Nota importante:</strong> Actualmente este sitio prioriza el uso de cookies técnicas. No utilizamos cookies de publicidad comportamental ni de <em>retargeting</em> sin tu consentimiento previo explícito.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>3. Cookies de terceros</h2>
+          <p>
+            Algunos servicios integrados en este sitio pueden instalar sus propias cookies. A continuación se detallan los proveedores más relevantes:
+          </p>
+          <ul>
+            <li>
+              <strong>Cloudflare</strong> — cookies de seguridad y rendimiento. Consulta su
+              <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">política de privacidad</a>.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>4. Gestión y desactivación de cookies</h2>
+          <p>
+            Puedes configurar tu navegador para aceptar, rechazar o eliminar las cookies instaladas en tu equipo. Ten en cuenta que deshabilitar determinadas cookies puede afectar al correcto funcionamiento de algunas secciones de la web.
+          </p>
+          <p>Instrucciones según navegador:</p>
+          <ul class="browser-list">
+            <li>
+              <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a>
+            </li>
+            <li>
+              <a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web-rastrear-preferencias" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a>
+            </li>
+            <li>
+              <a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a>
+            </li>
+            <li>
+              <a href="https://support.microsoft.com/es-es/windows/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener noreferrer">Microsoft Edge</a>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. Actualización de esta política</h2>
+          <p>
+            Esta política puede actualizarse para adaptarse a cambios legislativos, técnicos o de los servicios que ofrecemos. Te recomendamos revisarla periódicamente. La fecha de la última actualización figura al pie de esta página.
+          </p>
+          <p>
+            Para cualquier consulta sobre el uso de cookies, puedes contactar con nosotros en <a href="mailto:contacto@elclubdelamentefria.com">contacto@elclubdelamentefria.com</a>.
+          </p>
+        </section>
+
+        <p class="legal-updated">Última actualización: abril de 2026.</p>
+      </article>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(4rem, 10vw, 8rem);
+    min-height: 100vh;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--brand-pink); }
+
+  .legal-content {
+    max-width: 720px;
+  }
+
+  h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-family: var(--ff-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    margin-top: 0;
+  }
+
+  h3 {
+    font-family: var(--ff-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  p {
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  ul {
+    color: var(--muted);
+    line-height: 1.75;
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .browser-list {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .browser-list li::before {
+    content: "→ ";
+    color: var(--brand-purple);
+    font-weight: 700;
+  }
+
+  a {
+    color: var(--brand-pink);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+
+  /* Cookie type blocks */
+  .cookie-type {
+    border-left: 2px solid var(--border);
+    padding-left: var(--s-4);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s ease;
+  }
+  .cookie-type:hover {
+    border-left-color: var(--brand-purple);
+  }
+  .cookie-type--note {
+    border-left-color: color-mix(in oklab, var(--brand-purple) 50%, var(--border));
+    background: color-mix(in oklab, var(--surface) 40%, transparent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: var(--s-4);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-family: var(--ff-body);
+    background: color-mix(in oklab, var(--green) 15%, transparent);
+    color: var(--green);
+    border: 1px solid color-mix(in oklab, var(--green) 30%, transparent);
+    vertical-align: middle;
+  }
+  .badge-opt {
+    background: color-mix(in oklab, var(--yellow) 15%, transparent);
+    color: var(--yellow);
+    border-color: color-mix(in oklab, var(--yellow) 30%, transparent);
+  }
+
+  .legal-updated {
+    font-size: 0.875rem;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
