@@ -52,7 +52,7 @@ const {
                 <label class="checkbox-container">
                     <input type="checkbox" name="privacy">
                     <span class="checkmark"></span>
-                    <span class="label-text">He leído y acepto la política de privacidad <span class="required">*</span></span>
+                    <span class="label-text">He leído y acepto la <a href="/privacidad" class="privacy-link">política de privacidad</a> <span class="required">*</span></span>
                 </label>
                 <span class="field-error privacy-error" data-for="privacy" aria-live="polite"></span>
             </div>
@@ -162,7 +162,7 @@ const {
 
             if (error) {
                 console.error('[Supabase leads]', error.code, error.message);
-                setStatusBar(form, `Error [${error.code}]: ${error.message}`, 'error');
+                setStatusBar(form, 'No hemos podido enviar tu solicitud. Por favor, inténtalo de nuevo en unos instantes.', 'error');
                 if (btn) { btn.textContent = originalText; btn.disabled = false; }
                 return;
             }
@@ -191,6 +191,8 @@ const {
     .label-text { display: block; font-size: 0.95rem; color: var(--muted); margin-bottom: 0.5rem; font-weight: 500; }
     .privacy-wrapper .label-text { display: inline; margin-bottom: 0; vertical-align: middle; cursor: pointer;}
     .required { color: var(--brand-pink); font-size: 0.85em; }
+    .privacy-link { color: var(--brand-pink); text-decoration: underline; }
+    .privacy-link:hover { opacity: 0.8; }
 
     /* Error states */
     .field-error {

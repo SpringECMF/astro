@@ -41,7 +41,7 @@ const isFooter = variant === 'footer';
                     <label class="checkbox-container">
                         <input type="checkbox" name="privacy" required>
                         <span class="checkmark"></span>
-                        <span class="label-text">He leído y acepto la política de privacidad</span>
+                        <span class="label-text">He leído y acepto la <a href="/privacidad" class="privacy-link">política de privacidad</a></span>
                     </label>
                     <span class="nl-field-error privacy-error" aria-live="polite"></span>
                 </div>
@@ -118,7 +118,7 @@ const isFooter = variant === 'footer';
                     setStatus(formEl, '¡Ya estás suscrito! Te llegará el siguiente envío.', 'success');
                 } else {
                     console.error('[Supabase newsletter]', error.code, error.message);
-                    setStatus(formEl, `Error [${error.code}]: ${error.message}`, 'error');
+                    setStatus(formEl, 'No hemos podido completar la suscripción. Por favor, inténtalo de nuevo.', 'error');
                     if (btn) { btn.textContent = originalText; btn.disabled = false; }
                     return;
                 }
@@ -211,6 +211,8 @@ const isFooter = variant === 'footer';
     .newsletter-form { display:flex; flex-direction: column; gap: var(--s-3); max-width: 400px; }
     .w-full { width: 100%; }
     .nl-field { display: flex; flex-direction: column; }
+    .privacy-link { color: var(--brand-pink); text-decoration: underline; }
+    .privacy-link:hover { opacity: 0.8; }
     .nl-field-error, .privacy-error {
         font-size: 0.78rem;
         color: var(--brand-pink);
