@@ -8,15 +8,27 @@ import ContactForm from './ContactForm.astro';
 
         <span class="hero-brand">El Club de la Mente Fría</span>
 
-        <p class="slogan-problem gradient-text-silver">¿Sabes ese nudo en el estómago cuando piensas en todo lo que te queda por hacer?</p>
+        <h1 class="hero-title">
+            No necesitas aprender IA.<br>
+            <span class="gradient-text">Necesitas que la IA trabaje para ti.</span>
+        </h1>
 
-        <p class="slogan-solution">Pues imagina que desaparece de golpe.</p>
+        <p class="hero-subtitle">
+            Nadie compró un martillo para estudiar carpintería.<br>
+            Lo compró para clavar el clavo.
+        </p>
 
-        <p class="slogan-how"><strong>Con orquestación de Agentes de IA y automatización de procesos.</strong> Para que tu empresa avance aunque tú no estés mirando.</p>
+        <div class="hero-body">
+            <p>Hay demasiada gente vendiéndote cursos de prompts, configuraciones y herramientas que nunca vas a usar.</p>
+            <p>Y muy poca dispuesta a sentarse contigo, entender cómo funciona tu negocio y dejarte una IA que lo resuelva sola.</p>
+            <p class="hero-statement">Eso es lo que hacemos.</p>
+            <p>Tus procesos repetitivos, las decisiones pequeñas que te roban el foco, las tareas que no deberían depender de ti — las gestiona un equipo de agentes configurados a tu medida.</p>
+            <p><strong>Tú marcas la estrategia. Ellos ejecutan.</strong><br>Para que tu tiempo y tu cabeza vayan donde de verdad generan valor.</p>
+            <p class="hero-proof">Una demo de 20 minutos vale más que 1.000 palabras explicándote cómo funciona.</p>
+        </div>
 
         <div class="hero-ctas">
-            <button id="heroPrimaryBtn" class="btn-hero-primary">Quiero agendar mi demo →</button>
-            <a href="#servicios" class="btn-hero-secondary">Ver cómo trabajamos</a>
+            <button id="heroPrimaryBtn" class="btn-hero-primary">Reserva tu demo gratis — 20 minutos y lo ves con tus propios ojos →</button>
         </div>
 
         <div id="heroFormContainer" class="hero-form-wrapper">
@@ -101,53 +113,87 @@ import ContactForm from './ContactForm.astro';
         text-transform: uppercase;
         color: var(--muted);
         background: rgba(255, 255, 255, 0.02);
-        margin-bottom: 3rem;
+        margin-bottom: 2.5rem;
     }
     @media (max-width: 767px) { .hero-brand { margin-bottom: 2rem; } }
 
-    /* ── Problem ── */
-    .slogan-problem {
+    /* ── H1 ── */
+    .hero-title {
         font-family: var(--ff-display);
-        font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-        font-weight: 400;
-        line-height: 1.55;
-        max-width: 600px;
-        margin: 0 auto var(--space-block);
-    }
-    @media (max-width: 767px) { .slogan-problem { font-size: 1rem; } }
-
-    /* ── Punch ── */
-    .slogan-solution {
-        font-family: var(--ff-display);
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-size: clamp(2.2rem, 5vw, 4rem);
         font-weight: 900;
-        letter-spacing: -0.045em;
-        line-height: 1.02;
-        margin-bottom: var(--space-block);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+        color: var(--text);
+        margin: 0 auto var(--space-block);
+        max-width: 720px;
+    }
+    @media (max-width: 767px) {
+        .hero-title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+    }
+
+    .gradient-text {
         background: var(--brand-gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         color: transparent;
     }
-    @media (max-width: 767px) { .slogan-solution { font-size: 2.4rem; } }
 
-    /* ── How ── */
-    .slogan-how {
-        font-size: 1rem;
+    /* ── Subtitle — analogy ── */
+    .hero-subtitle {
+        font-family: var(--ff-display);
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+        font-weight: 400;
+        font-style: italic;
         color: var(--muted);
-        line-height: 1.7;
-        max-width: 540px;
+        line-height: 1.55;
+        max-width: 520px;
         margin: 0 auto var(--space-block);
     }
-    .slogan-how strong { color: var(--text); font-weight: 700; }
+    @media (max-width: 767px) { .hero-subtitle { font-size: 1rem; } }
 
-    /* ── Gradient silver (shared utility) ── */
-    .gradient-text-silver {
-        background: linear-gradient(180deg, var(--text) 0%, color-mix(in oklab, var(--text) 30%, transparent) 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+    /* ── Body paragraphs ── */
+    .hero-body {
+        max-width: 600px;
+        text-align: left;
+        margin-bottom: var(--space-block);
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+    }
+    @media (max-width: 767px) {
+        .hero-body { text-align: left; }
+    }
+
+    .hero-body p {
+        font-size: 1rem;
+        color: var(--muted);
+        line-height: 1.75;
+        margin: 0;
+    }
+    .hero-body strong {
+        color: var(--text);
+        font-weight: 700;
+    }
+
+    /* "Eso es lo que hacemos." — standout line */
+    .hero-statement {
+        font-family: var(--ff-display);
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        color: var(--text) !important;
+        letter-spacing: -0.02em;
+    }
+
+    /* "Una demo de 20 minutos..." — closing punch */
+    .hero-proof {
+        font-size: 0.95rem !important;
+        color: var(--muted) !important;
+        font-style: italic;
+        border-left: 2px solid var(--brand-pink);
+        padding-left: 1rem;
+        margin-top: 0.5rem;
     }
 
     /* ── CTA group ── */
@@ -160,8 +206,7 @@ import ContactForm from './ContactForm.astro';
     }
     @media (max-width: 480px) {
         .hero-ctas { flex-direction: column; width: 100%; }
-        .btn-hero-primary,
-        .btn-hero-secondary { width: 100%; justify-content: center; }
+        .btn-hero-primary { width: 100%; justify-content: center; }
     }
 
     .btn-hero-primary {
@@ -185,26 +230,6 @@ import ContactForm from './ContactForm.astro';
             transform: translateY(-2px);
             box-shadow: 0 12px 40px rgba(233, 30, 140, 0.4);
         }
-    }
-
-    .btn-hero-secondary {
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--text);
-        -webkit-text-fill-color: var(--text);
-        padding: 1rem 1.8rem;
-        border-radius: 10px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        font-family: inherit;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        transition: border-color 0.2s;
-    }
-    @media (min-width: 768px) {
-        .btn-hero-secondary:hover { border-color: var(--muted); }
     }
 
     /* ── Form wrapper ── */
