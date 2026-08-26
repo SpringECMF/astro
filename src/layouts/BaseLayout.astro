@@ -6,7 +6,10 @@ interface Props {
 	description?: string;
 }
 
-const { title, description = "El club de la mente fría — Automatización con IA para PYMES" } = Astro.props;
+const { title, description = "Consultoría IA para empresas en España. Agentes de IA, automatización de procesos y formación en IA. Tu empresa trabajando aunque tú no estés." } = Astro.props;
+
+const siteURL = 'https://elclubdelamentefria.com';
+const canonicalURL = new URL(Astro.url.pathname, siteURL).href;
 ---
 
 <!doctype html>
@@ -16,22 +19,88 @@ const { title, description = "El club de la mente fría — Automatización con 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- TEMPORAL: bloqueo SEO hasta que el dominio de producción esté fijo.
-         Cuando el dominio definitivo esté activo, eliminar esta línea y activar
-         el schema JSON-LD de FAQ.astro. -->
+    <!-- TEMPORAL: bloqueo SEO hasta nueva indicación. -->
     <meta name="robots" content="noindex, nofollow" />
-    
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={`${siteURL}/og-image.png`} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="El Club de la Mente Fría" />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100..900&family=Ysabeau+SC:wght@300&family=Zalando+Sans:ital,wght,wdth@0,100..900,62.5..125;1,100..900,62.5..125&display=swap" rel="stylesheet">
 
-    <!-- GTM Placeholder -->
+    <!-- Schema: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "El Club de la Mente Fría",
+      "url": "https://elclubdelamentefria.com",
+      "description": "Consultoría de IA para empresas en España. Orquestación de agentes, automatización de procesos y formación en IA.",
+      "logo": "https://elclubdelamentefria.com/logo-light-transparent.png",
+      "areaServed": "ES",
+      "inLanguage": "es"
+    }
+    </script>
+
+    <!-- Schema: Service -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Consultoría IA para empresas",
+      "provider": {
+        "@type": "Organization",
+        "name": "El Club de la Mente Fría"
+      },
+      "areaServed": "ES",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios de IA para empresas",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Orquestación de Agentes de IA",
+            "description": "Agentes que actúan dentro de tus procesos, entrenados con el conocimiento real de tu empresa y que se validan entre sí antes de ejecutar."
+          },
+          {
+            "@type": "Offer",
+            "name": "Automatización de Procesos con IA",
+            "description": "Identificamos, conectamos y automatizamos los procesos que más horas consumen en tu empresa."
+          },
+          {
+            "@type": "Offer",
+            "name": "Formación en IA para empresas",
+            "description": "Formamos a tu equipo con sus tareas reales para que la IA pase del PowerPoint al día a día."
+          }
+        ]
+      }
+    }
+    </script>
+
+    <!-- GA4 — carga solo si el usuario aceptó cookies analíticas -->
     <script is:inline>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      if (typeof window !== 'undefined' &&
+          localStorage.getItem('ecmf-cookies-analytics') === 'true') {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+      }
     </script>
 </head>
 <body class="theme-dark">

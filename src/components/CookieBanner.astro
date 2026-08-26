@@ -116,7 +116,14 @@
 
   function showBanner() {
     banner?.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    // Algunos navegadores (p.ej. Brave, con "Block cookie consent notices")
+    // ocultan el banner con su propio CSS sin que lo sepamos. Si eso pasa,
+    // no bloqueamos el scroll de una página que el usuario no puede cerrar.
+    requestAnimationFrame(() => {
+      if (banner && getComputedStyle(banner).display !== 'none') {
+        document.body.style.overflow = 'hidden';
+      }
+    });
   }
 
   function hideBanner() {

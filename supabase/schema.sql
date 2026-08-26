@@ -3,6 +3,27 @@
 -- Ejecutar COMPLETO en Supabase → SQL Editor
 -- ══════════════════════════════════════════════════
 
+-- ── Tabla: cookie_consents ───────────────────────────
+-- Solo la escribe la Edge Function save-consent (service_role,
+-- que ignora RLS) — por eso no lleva políticas para "anon".
+create table if not exists cookie_consents (
+    id                  uuid primary key default gen_random_uuid(),
+    session_id          text not null,
+    technical           boolean not null default true,
+    analytics           boolean not null default false,
+    marketing           boolean not null default false,
+    consent_version     text not null default '1.0',
+    action              text not null,
+    user_agent          text,
+    page_url            text,
+    created_at          timestamptz default now(),
+    expires_at          timestamptz,
+    ip_anonymized       text,
+    previous_consent_id uuid references cookie_consents (id)
+);
+
+alter table cookie_consents enable row level security;
+
 -- ── Tabla: leads ────────────────────────────────────
 create table if not exists leads (
     id              uuid primary key default gen_random_uuid(),

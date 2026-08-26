@@ -1,7 +1,6 @@
 # robots.txt — TEMPORAL
-# URL de producción aún no definitiva. Bloqueamos todo el crawling e indexación
-# hasta que el dominio final esté activo.
-# Cuando el dominio esté fijo: cambiar Disallow: / por Disallow: (vacío) para abrir.
+# Bloqueamos todo el crawling e indexación hasta nueva indicación.
+# Para abrir: cambiar Disallow: / por Disallow: (vacío).
 
 User-agent: *
 Disallow: /

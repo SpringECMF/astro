@@ -5,9 +5,11 @@
     <div class="container nav">
       <!-- Logo (Left) -->
       <a href="#" class="brand">
-        <img src="/logo-dark.png" alt="Logotipo de El club de la mente fría" class="logo-light" />
-        <img src="/logo-light-v2.png" alt="Logotipo de El club de la mente fría" class="logo-dark" />
+        <img src="/logo-dark.png" alt="El Club de la Mente Fría — Consultoría IA para empresas España" class="logo-light" />
+        <img src="/logo-light-v2.png" alt="El Club de la Mente Fría — Consultoría IA para empresas España" class="logo-dark" />
       </a>
+      <span class="brand-divider" aria-hidden="true"></span>
+      <img src="/logo-strategic-aigency.png" alt="Strategic AIgency & Consulting" class="logo-partner" />
       
       <!-- Right Side Container (Links + Controls) -->
       <div class="right-cluster">
@@ -93,7 +95,13 @@
 
     :global(.theme-dark) .logo-light { display: none; }
     :global(.theme-dark) .logo-dark { display: block; }
-    
+
+    /* Partner logo (Strategic AIgency) — light theme only */
+    .brand-divider { display: none; width: 1px; height: 36px; background: rgba(0, 0, 0, 0.12); }
+    .logo-partner { display: none; height: 34px; }
+    :global(.theme-light) .brand-divider { display: block; }
+    :global(.theme-light) .logo-partner { display: block; }
+
     /* Right side grouping */
     .right-cluster { display: flex; align-items: center; gap: 2rem; }
     
